@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30709.132
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SsdtParser", "SsdtParser\SsdtParser.fsproj", "{08DA3A15-EA9A-4E9A-9216-7122FF6080A9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{08DA3A15-EA9A-4E9A-9216-7122FF6080A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08DA3A15-EA9A-4E9A-9216-7122FF6080A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08DA3A15-EA9A-4E9A-9216-7122FF6080A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08DA3A15-EA9A-4E9A-9216-7122FF6080A9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {578C73C9-8F72-48D5-8E84-95FE2F5092AA}
+	EndGlobalSection
+EndGlobal
