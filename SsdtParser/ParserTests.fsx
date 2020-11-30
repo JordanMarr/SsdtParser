@@ -11,9 +11,9 @@ let test parser text =
     | Success(result,_,_) -> printfn "Success: %A" result
     | Failure(_,error,_) -> printfn "Error: %A" error
 
-test tableOwner "[dbo]."
-test tableOwner "dbo."
-test tableName "[Orders]"
-test tableName "Orders"
+test segment "[dbo]."
+test segment "dbo."
+test segment "[Orders]"
+test segment "Orders"
 test table "CREATE TABLE [dbo].[DrawingLog] ("
-test table "CREATE TABLE [DrawingLog] ("
+test table "CREATE TABLE [DrawingLog]    ("

@@ -11,30 +11,30 @@ let str s = pstring s
 let strCI s = pstringCI s
 let ws = spaces
 
-let tableOwner : Parser<string, unit> = 
+/// Parses a name segment like [dbo] or [Orders].
+let segment : Parser<string, unit> = 
     opt (skipChar '[') 
     >>. many1Chars letter 
     .>> opt (skipChar ']') 
-    .>> pchar '.'
+    .>> opt (pchar '.')
     |>> string
 
-/// Parses a name segment delimited by a dot - ex: [dbo].[Orders]
-let tableName : Parser<string, unit> = 
-    opt (skipChar '[') 
-    >>. many1Chars letter 
-    .>> opt (skipChar ']') 
-    |>> string
 
-let createTable (owner, table) = 
-    { Model.Table.Name = table
-      Model.Table.Owner = owner |> Option.defaultValue "dbo" }
+let createTable segments =
+    match segments with
+    | [owner; table] ->
+        { Model.Table.Name = table
+          Model.Table.Owner = owner }
+    | [table] ->
+        { Model.Table.Name = table
+          Model.Table.Owner = "dbo" }
+    | _ -> 
+        failwith "Expected either '[dbo].[Table]' or '[Table]'."
 
 /// Parses table
 let table = 
-    // Ex: CREATE TABLE [dbo].[DrawingLog] (
     skipString "CREATE TABLE " 
-    >>. opt tableOwner
-    .>>. tableName
+    >>. many segment
     .>> spaces
     .>> pchar '('
     |>> createTable
