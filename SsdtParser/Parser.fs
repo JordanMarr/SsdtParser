@@ -16,7 +16,7 @@ let segment : Parser<string, unit> =
     opt (skipChar '[') 
     >>. many1Chars letter 
     .>> opt (skipChar ']') 
-    .>> opt (pchar '.')
+    .>> opt (skipChar '.')
     |>> string
 
 
@@ -36,7 +36,7 @@ let table =
     skipString "CREATE TABLE " 
     >>. many segment
     .>> spaces
-    .>> pchar '('
+    .>> skipChar '('
     |>> createTable
 
 
@@ -48,9 +48,9 @@ module DataTypes =
         strCI "VARCHAR" 
         >>. spaces
         >>. skipChar '(' 
-        >>. many (letter <|> digit)
+        >>. skipMany (letter <|> digit)
         .>> skipChar ')'
-        |>> fun _ -> Model.VarChar
+        >>% Model.VarChar
 
 let createColumn ((name, dataType), allowNulls) =
     { Model.Column.Name = name
