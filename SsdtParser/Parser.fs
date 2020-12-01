@@ -1,28 +1,9 @@
 ﻿module Parser
 open FParsec
 
-/// SSDT AST
-type AST = 
-    | Table of Model.TableHeader
-    | Column of Model.Column
-    | Constraint of Model.Constraint
-
 let str s = pstring s
 let strCI s = pstringCI s
 let ws = spaces
-
-//let segmentWithBrackets : Parser<string, unit> =
-//    skipChar '['
-//    >>. many1CharsTill (letter <|> digit <|> pchar ' ') (pchar ']')
-//    .>> opt (skipChar '.')
-//    |>> string
-
-//let segmentNoBrackets : Parser<string, unit> =
-//    manyChars (letter <|> digit)
-//    .>> opt (skipChar '.')
-
-//let segment : Parser<string, unit> = 
-//    segmentWithBrackets <|> segmentNoBrackets
 
 /// Parses a name segment like [dbo] or [Orders].
 let segment : Parser<string, unit> = 
@@ -31,7 +12,6 @@ let segment : Parser<string, unit> =
     .>> opt (skipChar ']') 
     .>> opt (skipChar '.')
     |>> string
-
 
 let createTableHeader segments =
     match segments with
@@ -44,7 +24,6 @@ let createTableHeader segments =
     | _ -> 
         failwith "Expected either '[dbo].[Table]' or '[Table]'."
 
-/// Parses table
 let tableHeader = 
     skipString "CREATE TABLE " 
     >>. many1 segment
@@ -97,7 +76,6 @@ let createColumn ((name, dataType), allowNulls) =
       Model.Column.AllowNulls = allowNulls
       Model.Column.Default = None }
 
-/// Parses a column definition
 let column = 
     spaces 
     >>. segment
