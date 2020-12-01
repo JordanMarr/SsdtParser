@@ -38,3 +38,38 @@ let table =
     .>> spaces
     .>> pchar '('
     |>> createTable
+
+
+module DataTypes =
+    let uniqueIdentifier : Parser<Model.DataType, unit> = stringReturn "UNIQUEIDENTIFIER" Model.UniqueIdentifier
+    let bit : Parser<Model.DataType, unit> = stringReturn "BIT" Model.Bit
+    let date : Parser<Model.DataType, unit> = stringReturn "DATE" Model.Date
+    let varChar : Parser<Model.DataType, unit> = 
+        strCI "VARCHAR" 
+        >>. spaces
+        >>. skipChar '(' 
+        >>. many (letter <|> digit)
+        .>> skipChar ')'
+        |>> fun _ -> Model.VarChar
+
+let createColumn ((name, dataType), allowNulls) =
+    { Model.Column.Name = name
+      Model.Column.DataType = dataType
+      Model.Column.AllowNulls = allowNulls
+      Model.Column.Default = None }
+
+/// Parses a column definition
+let column = 
+    spaces 
+    >>. segment
+    .>> spaces
+    .>>. choice 
+        [ DataTypes.uniqueIdentifier
+          DataTypes.bit
+          DataTypes.varChar
+          DataTypes.date ]
+    .>> spaces
+    .>>. ((stringReturn "NULL" true) <|> (stringReturn "NOT NULL" false))
+    .>> spaces
+    .>> opt (pchar ',')
+    |>> createColumn

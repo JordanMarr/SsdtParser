@@ -9,7 +9,7 @@ type Table = {
 
 and Column = {
     Name: string
-    DataType: string
+    DataType: DataType
     AllowNulls: bool
     Default: string option
 }
@@ -19,6 +19,7 @@ and DataType =
     | Int
     | Bit
     | VarChar
+    | Date
 
 and Constraint = {
     Name: string
@@ -28,9 +29,3 @@ and Constraint = {
 and ConstraintType = 
     | PrimaryKey
     | ForeignKey of table: string * column: string
-
-let dataTypes = 
-    [ "UNIQUEIDENTIFIER"
-      "INT"
-      "BIT"
-      "VARCHAR" ]
