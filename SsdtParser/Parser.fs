@@ -39,7 +39,6 @@ let table =
     .>> skipChar '('
     |>> createTable
 
-
 module DataTypes =
     let uniqueIdentifier : Parser<Model.DataType, unit> = stringReturn "UNIQUEIDENTIFIER" Model.UniqueIdentifier
     let bit : Parser<Model.DataType, unit> = stringReturn "BIT" Model.Bit
@@ -52,6 +51,11 @@ module DataTypes =
         .>> skipChar ')'
         >>% Model.VarChar
 
+let colDefault = 
+    skipString "DEFAULT"
+    >>. spaces
+    >>. manyTill anyChar (pchar ',')
+    
 let createColumn ((name, dataType), allowNulls) =
     { Model.Column.Name = name
       Model.Column.DataType = dataType
@@ -71,5 +75,6 @@ let column =
     .>> spaces
     .>>. ((stringReturn "NULL" true) <|> (stringReturn "NOT NULL" false))
     .>> spaces
+    .>> opt (spaces >>. colDefault >>. spaces)
     .>> opt (pchar ',')
     |>> createColumn
