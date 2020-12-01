@@ -29,6 +29,8 @@ test DataTypes.varChar "VARCHAR(100)"
 test DataTypes.varChar "VARCHAR (MAX)"
 test colConstraint "CONSTRAINT [PK_DrawingLog] PRIMARY KEY CLUSTERED ([ProjectId]),"
 test colConstraint "CONSTRAINT [FK_DrawingLog_Projects] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Projects] ([Id])"
+test colConstraint "CONSTRAINT [PK_DrawingLogSheets] PRIMARY KEY CLUSTERED ([Id] ASC),"
+test colConstraint "CONSTRAINT [UQ_DrawingLogSheets_SheetNumber] UNIQUE ([ProjectId], SheetNumber)"
 
 test table """
 CREATE TABLE [dbo].[DrawingLog] ( 
@@ -41,4 +43,13 @@ CREATE TABLE [dbo].[DrawingLog] (
     [Holidays] VARCHAR(MAX) NOT NULL DEFAULT '[]', 
     CONSTRAINT [PK_DrawingLog] PRIMARY KEY CLUSTERED ([ProjectId]),
     CONSTRAINT [FK_DrawingLog_Projects] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Projects] ([Id])
+);"""
+
+test table """
+CREATE TABLE [dbo].[DrawingLogHistory] (
+    [SheetId]           UNIQUEIDENTIFIER   NOT NULL,
+    [SheetNumber]       VARCHAR (40)       NOT NULL,
+    [ChangeDescription] VARCHAR (200)      NOT NULL,
+    [Changed]           DATETIMEOFFSET (7) NOT NULL,
+    [Username]          VARCHAR (100)      NOT NULL
 );"""

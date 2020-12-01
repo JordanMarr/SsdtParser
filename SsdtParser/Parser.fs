@@ -43,6 +43,13 @@ module DataTypes =
         >>. skipMany (letter <|> digit)
         .>> skipChar ')'
         >>% Model.VarChar
+    let dateTimeOffset = 
+        strCI "DATETIMEOFFSET" 
+        >>. spaces
+        >>. skipChar '(' 
+        >>. skipMany digit
+        .>> skipChar ')'
+        >>% Model.DateTimeOffset
 
 let colDefault = 
     skipString "DEFAULT"
@@ -50,7 +57,11 @@ let colDefault =
     >>. manyTill anyChar (pchar ',')
 
 let colConstraintType =
-    choice [ skipString "PRIMARY KEY CLUSTERED"; skipString "FOREIGN KEY" ]
+    choice [ 
+        skipString "PRIMARY KEY CLUSTERED"
+        skipString "FOREIGN KEY" 
+        skipString "UNIQUE" 
+    ]
 
 let colConstraintReference = 
     skipString "REFERENCES" 
@@ -85,7 +96,9 @@ let column =
           DataTypes.bit
           DataTypes.varChar
           DataTypes.int
-          DataTypes.date ]
+          DataTypes.dateTimeOffset // must be before date
+          DataTypes.date 
+        ]
     .>> spaces
     .>>. ((stringReturn "NULL" true) <|> (stringReturn "NOT NULL" false))
     .>> spaces

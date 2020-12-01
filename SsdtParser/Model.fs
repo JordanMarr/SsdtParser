@@ -27,6 +27,7 @@ and DataType =
     | Bit
     | VarChar
     | Date
+    | DateTimeOffset
 
 and Constraint = {
     Name: string
