@@ -11,6 +11,7 @@ and Table = {
     Name: string
     Owner: string
     Columns: Column list
+    Constraints: Constraint list
 }
 
 and Column = {
@@ -29,7 +30,7 @@ and DataType =
 
 and Constraint = {
     Name: string
-    Type: ConstraintType
+    //Type: ConstraintType
 }
 
 and ConstraintType = 

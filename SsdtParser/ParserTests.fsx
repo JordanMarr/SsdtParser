@@ -27,9 +27,11 @@ test DataTypes.uniqueIdentifier "UNIQUEIDENTIFIER"
 test DataTypes.bit "BIT"
 test DataTypes.varChar "VARCHAR(100)"
 test DataTypes.varChar "VARCHAR (MAX)"
+test colConstraint "CONSTRAINT [PK_DrawingLog] PRIMARY KEY CLUSTERED ([ProjectId]),"
+test colConstraint "CONSTRAINT [FK_DrawingLog_Projects] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Projects] ([Id])"
 
 test table """
-CREATE TABLE [dbo].[DrawingLog] (
+CREATE TABLE [dbo].[DrawingLog] ( 
     [ProjectId]                       UNIQUEIDENTIFIER NOT NULL,
     [DurationForQAQC] INT NOT NULL , 
     [DurationToReviseQAQCComments] INT NOT NULL , 
@@ -37,4 +39,6 @@ CREATE TABLE [dbo].[DrawingLog] (
     [DurationToReviseCommentsFromGC] INT NOT NULL , 
     [WorkOnSaturdays] BIT NOT NULL , 
     [Holidays] VARCHAR(MAX) NOT NULL DEFAULT '[]', 
+    CONSTRAINT [PK_DrawingLog] PRIMARY KEY CLUSTERED ([ProjectId]),
+    CONSTRAINT [FK_DrawingLog_Projects] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Projects] ([Id])
 );"""

@@ -27,7 +27,7 @@ let ws = spaces
 /// Parses a name segment like [dbo] or [Orders].
 let segment : Parser<string, unit> = 
     opt (skipChar '[') 
-    >>. many1Chars letter 
+    >>. many1Chars (letter <|> pchar '_')
     .>> opt (skipChar ']') 
     .>> opt (skipChar '.')
     |>> string
@@ -47,7 +47,7 @@ let createTableHeader segments =
 /// Parses table
 let tableHeader = 
     skipString "CREATE TABLE " 
-    >>. many segment
+    >>. many1 segment
     .>> spaces
     .>> skipChar '('
     |>> createTableHeader
@@ -70,10 +70,26 @@ let colDefault =
     >>. spaces
     >>. manyTill anyChar (pchar ',')
 
-//let colConstraint =
-//    skipString "CONSTRAINT"
-//    >>. skipMany1Till anyChar (pchar ',')
-//    >>% "CONSTRAINT"
+let colConstraintType =
+    choice [ skipString "PRIMARY KEY CLUSTERED"; skipString "FOREIGN KEY" ]
+
+let colConstraintReference = 
+    skipString "REFERENCES" 
+    >>. spaces 
+    >>. many1 segment 
+    >>. spaces 
+    >>. between (opt (pchar '(')) (opt (pchar ')')) segment
+
+let colConstraint =
+    skipString "CONSTRAINT"
+    >>. spaces
+    >>. segment
+    .>> spaces
+    .>> colConstraintType
+    .>> spaces
+    .>> between (opt (pchar '(')) (opt (pchar ')')) segment
+    .>> opt colConstraintReference
+    |>> (fun s -> { Model.Constraint.Name = s })
     
 let createColumn ((name, dataType), allowNulls) =
     { Model.Column.Name = name
@@ -96,21 +112,24 @@ let column =
     .>>. ((stringReturn "NULL" true) <|> (stringReturn "NOT NULL" false))
     .>> spaces
     .>> opt (spaces >>. colDefault >>. spaces)
-    .>> opt (pchar ',')
     |>> createColumn
 
-let createTable (tableHeader: Model.TableHeader, columns: Model.Column list) =
+let createTable ((tableHeader: Model.TableHeader, columns), constraints) =
+//let createTable (tableHeader: Model.TableHeader, constraints) =
     { Model.Table.Name = tableHeader.Name
       Model.Table.Owner = tableHeader.Owner
-      Model.Table.Columns = columns }
+      Model.Table.Columns = columns
+      Model.Table.Constraints = constraints }
 
 /// Parses a create table script with columns
 let table = 
     let colWs = (spaces >>. column .>> spaces)
-    //let constraintWs = (spaces >>. colConstraint .>> spaces)
+    let constraintWs = (spaces >>. colConstraint .>> spaces)
+    let commaWs = (spaces >>. skipChar ',' >>. spaces)
 
     spaces
     >>. tableHeader 
-    .>>. manyTill colWs (str ");")
-    .>> opt (str ");")
+    .>>. sepBy1 colWs commaWs
+    .>>. sepBy constraintWs commaWs
+    .>> opt (skipString ");")
     |>> createTable
