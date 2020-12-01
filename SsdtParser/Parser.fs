@@ -115,7 +115,6 @@ let column =
     |>> createColumn
 
 let createTable ((tableHeader: Model.TableHeader, columns), constraints) =
-//let createTable (tableHeader: Model.TableHeader, constraints) =
     { Model.Table.Name = tableHeader.Name
       Model.Table.Owner = tableHeader.Owner
       Model.Table.Columns = columns
