@@ -3,13 +3,26 @@ open FParsec
 
 /// SSDT AST
 type AST = 
-    | Table of Model.Table
+    | Table of Model.TableHeader
     | Column of Model.Column
     | Constraint of Model.Constraint
 
 let str s = pstring s
 let strCI s = pstringCI s
 let ws = spaces
+
+//let segmentWithBrackets : Parser<string, unit> =
+//    skipChar '['
+//    >>. many1CharsTill (letter <|> digit <|> pchar ' ') (pchar ']')
+//    .>> opt (skipChar '.')
+//    |>> string
+
+//let segmentNoBrackets : Parser<string, unit> =
+//    manyChars (letter <|> digit)
+//    .>> opt (skipChar '.')
+
+//let segment : Parser<string, unit> = 
+//    segmentWithBrackets <|> segmentNoBrackets
 
 /// Parses a name segment like [dbo] or [Orders].
 let segment : Parser<string, unit> = 
@@ -20,30 +33,31 @@ let segment : Parser<string, unit> =
     |>> string
 
 
-let createTable segments =
+let createTableHeader segments =
     match segments with
     | [owner; table] ->
-        { Model.Table.Name = table
-          Model.Table.Owner = owner }
+        { Model.TableHeader.Name = table
+          Model.TableHeader.Owner = owner }
     | [table] ->
-        { Model.Table.Name = table
-          Model.Table.Owner = "dbo" }
+        { Model.TableHeader.Name = table
+          Model.TableHeader.Owner = "dbo" }
     | _ -> 
         failwith "Expected either '[dbo].[Table]' or '[Table]'."
 
 /// Parses table
-let table = 
+let tableHeader = 
     skipString "CREATE TABLE " 
     >>. many segment
     .>> spaces
     .>> skipChar '('
-    |>> createTable
+    |>> createTableHeader
 
 module DataTypes =
-    let uniqueIdentifier : Parser<Model.DataType, unit> = stringReturn "UNIQUEIDENTIFIER" Model.UniqueIdentifier
-    let bit : Parser<Model.DataType, unit> = stringReturn "BIT" Model.Bit
-    let date : Parser<Model.DataType, unit> = stringReturn "DATE" Model.Date
-    let varChar : Parser<Model.DataType, unit> = 
+    let uniqueIdentifier = stringReturn "UNIQUEIDENTIFIER" Model.UniqueIdentifier
+    let bit = stringReturn "BIT" Model.Bit
+    let date = stringReturn "DATE" Model.Date
+    let int = stringReturn "INT" Model.Int
+    let varChar = 
         strCI "VARCHAR" 
         >>. spaces
         >>. skipChar '(' 
@@ -55,6 +69,11 @@ let colDefault =
     skipString "DEFAULT"
     >>. spaces
     >>. manyTill anyChar (pchar ',')
+
+//let colConstraint =
+//    skipString "CONSTRAINT"
+//    >>. skipMany1Till anyChar (pchar ',')
+//    >>% "CONSTRAINT"
     
 let createColumn ((name, dataType), allowNulls) =
     { Model.Column.Name = name
@@ -71,6 +90,7 @@ let column =
         [ DataTypes.uniqueIdentifier
           DataTypes.bit
           DataTypes.varChar
+          DataTypes.int
           DataTypes.date ]
     .>> spaces
     .>>. ((stringReturn "NULL" true) <|> (stringReturn "NOT NULL" false))
@@ -78,3 +98,19 @@ let column =
     .>> opt (spaces >>. colDefault >>. spaces)
     .>> opt (pchar ',')
     |>> createColumn
+
+let createTable (tableHeader: Model.TableHeader, columns: Model.Column list) =
+    { Model.Table.Name = tableHeader.Name
+      Model.Table.Owner = tableHeader.Owner
+      Model.Table.Columns = columns }
+
+/// Parses a create table script with columns
+let table = 
+    let colWs = (spaces >>. column .>> spaces)
+    //let constraintWs = (spaces >>. colConstraint .>> spaces)
+
+    spaces
+    >>. tableHeader 
+    .>>. manyTill colWs (str ");")
+    .>> opt (str ");")
+    |>> createTable

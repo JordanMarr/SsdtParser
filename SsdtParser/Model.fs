@@ -1,10 +1,16 @@
 ﻿module Model
 
-type Table = {
+type TableHeader = {
     Name: string
     Owner: string
     //Columns: Column list
     //PKs: Column list
+}
+
+and Table = {
+    Name: string
+    Owner: string
+    Columns: Column list
 }
 
 and Column = {
