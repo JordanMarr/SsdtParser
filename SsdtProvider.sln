@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30709.132
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SsdtParser", "SsdtParser\SsdtParser.fsproj", "{08DA3A15-EA9A-4E9A-9216-7122FF6080A9}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "SsdtParser", "SsdtParser\SsdtParser.fsproj", "{08DA3A15-EA9A-4E9A-9216-7122FF6080A9}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "UnitTests", "UnitTests\UnitTests.fsproj", "{C4AD4B20-0056-420D-96B9-920EB78FD47A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{37042F45-77AB-4E88-9FEB-B63A1918D56D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{08DA3A15-EA9A-4E9A-9216-7122FF6080A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08DA3A15-EA9A-4E9A-9216-7122FF6080A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08DA3A15-EA9A-4E9A-9216-7122FF6080A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4AD4B20-0056-420D-96B9-920EB78FD47A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4AD4B20-0056-420D-96B9-920EB78FD47A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4AD4B20-0056-420D-96B9-920EB78FD47A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4AD4B20-0056-420D-96B9-920EB78FD47A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C4AD4B20-0056-420D-96B9-920EB78FD47A} = {37042F45-77AB-4E88-9FEB-B63A1918D56D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {578C73C9-8F72-48D5-8E84-95FE2F5092AA}
