@@ -2,12 +2,16 @@ module ParserTests
 open Expecto
 open FParsec
 open Parser
+open Model
 
 let testParser desc parser (text: string) =
     testCase desc <| fun _ ->
         match (run parser text) with
         | Success(result,_,_) -> printfn $"Success: %A{result}"
         | Failure(_,error,_) -> failwith $"Error: %A{error}"
+
+let testDataTypeParser desc (dataType: DataType) (text: string) =
+    testParser desc (getDataTypeParser dataType) text
 
 [<Tests>]
 let tests =
@@ -27,10 +31,11 @@ let tests =
         testParser "testParser3" column "    [SheetName]                       VARCHAR (200)    NOT NULL,"
         testParser "testParser4" column "    [Holidays] VARCHAR(MAX) NOT NULL DEFAULT '[]', "
         
-        testParser "uniqueIdentifier" DataTypes.uniqueIdentifier "UNIQUEIDENTIFIER"
-        testParser "bit" DataTypes.bit "BIT"
-        testParser "varChar1" DataTypes.varChar "VARCHAR(100)"
-        testParser "varChar2" DataTypes.varChar "VARCHAR (MAX)"
+        testDataTypeParser "uniqueIdentifier" UniqueIdentifier "UNIQUEIDENTIFIER"
+        testDataTypeParser "bit" Bit "BIT"
+        testDataTypeParser "varChar1" VarChar "VARCHAR(100)"
+        testDataTypeParser "varChar2" VarChar "VARCHAR (MAX)"
+        testDataTypeParser "datetimeoffset" DateTimeOffset "DATETIMEOFFSET (7)"
 
         testParser "colConstraint1" colConstraint "CONSTRAINT [PK_DrawingLog] PRIMARY KEY CLUSTERED ([ProjectId]),"
         testParser "colConstraint2" colConstraint "CONSTRAINT [FK_DrawingLog_Projects] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Projects] ([Id])"

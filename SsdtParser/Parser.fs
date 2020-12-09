@@ -31,26 +31,39 @@ let tableHeader =
     .>> skipChar '('
     |>> createTableHeader
 
-module DataTypes =
-    let uniqueIdentifier = stringReturn "UNIQUEIDENTIFIER" Model.UniqueIdentifier
-    let bit = stringReturn "BIT" Model.Bit
-    let date = stringReturn "DATE" Model.Date
-    let int = stringReturn "INT" Model.Int
-    let varChar = 
+/// Implements a parser for each case in Model.DataType.
+let getDataTypeParser = function 
+    | Model.UniqueIdentifier as t -> stringReturn "UNIQUEIDENTIFIER" t
+    | Model.Bit as t -> stringReturn "BIT" t    
+    | Model.Int as t -> stringReturn "INT" t
+    | Model.VarChar as t -> 
         strCI "VARCHAR" 
         >>. spaces
         >>. skipChar '(' 
         >>. skipMany (letter <|> digit)
         .>> skipChar ')'
-        >>% Model.VarChar
-    let dateTimeOffset = 
+        >>% t
+    | Model.DateTimeOffset as t -> // must be before date
         strCI "DATETIMEOFFSET" 
         >>. spaces
         >>. skipChar '(' 
         >>. skipMany digit
         .>> skipChar ')'
-        >>% Model.DateTimeOffset
+        >>% t
+    | Model.Date as t -> stringReturn "DATE" t
 
+open Microsoft.FSharp.Reflection
+// Will crash if DU contains members which aren't only tags
+let getNameAndInstance (caseInfo: UnionCaseInfo) = caseInfo.Name, FSharpValue.MakeUnion(caseInfo, [||]) :?> Model.DataType
+
+/// All supported col data types listed by descending length
+let dataTypes = 
+    FSharpType.GetUnionCases typeof<Model.DataType>
+    |> Array.map getNameAndInstance
+    |> Array.sortByDescending (fun (name, _) -> name.Length, name) // Longest names first to avoid partial consumption bugs
+    |> Array.map snd
+    |> Array.map getDataTypeParser
+    
 let colDefault = 
     skipString "DEFAULT"
     >>. spaces
@@ -91,14 +104,7 @@ let column =
     spaces 
     >>. segment
     .>> spaces
-    .>>. choice 
-        [ DataTypes.uniqueIdentifier
-          DataTypes.bit
-          DataTypes.varChar
-          DataTypes.int
-          DataTypes.dateTimeOffset // must be before date
-          DataTypes.date 
-        ]
+    .>>. choice dataTypes
     .>> spaces
     .>>. ((stringReturn "NULL" true) <|> (stringReturn "NOT NULL" false))
     .>> spaces
