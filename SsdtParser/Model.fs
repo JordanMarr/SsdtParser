@@ -23,14 +23,14 @@ and Column = {
 and DataType = 
     // Exact numerics
     | BigInt 
-    //| Numeric
+    | Numeric
     | Bit 
     | SmallInt
-    //| Decimal 
-    //| SmallMoney
+    | Decimal 
+    | SmallMoney
     | Int 
     | TinyInt
-    //| Money
+    | Money
 
     // Approximate numerics
     | Float
@@ -47,27 +47,27 @@ and DataType =
     // Character strings
     | Char
     | VarChar
-    //| Text
+    //| Text - deprecated!
 
     // Unicode character strings
-    //| NChar
+    | NChar
     | NVarChar
-    //| NText
+    //| NText - deprecated!
 
     // Binary strings
-    //| Binary
-    //| VarBinary
-    //| Image
+    | Binary
+    | VarBinary
+    //| Image - deprecated!
 
     // Other data types
     //| Cursor
-    //| RowVersion
-    //| HierarchyId
+    | RowVersion
+    | HierarchyId
     | UniqueIdentifier
     //| SqlVariant
-    //| Xml
-    //| SpatialGeometry
-    //| SpatialGeography
+    | Xml
+    | Geometry
+    | Geography
     //| Table
 
 and Constraint = {

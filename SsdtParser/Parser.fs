@@ -34,15 +34,18 @@ let tableHeader =
 module DataTypeParsers = 
     open Model
     open Microsoft.FSharp.Reflection
-
-    // "(1)", "(7)"
-    let sizeSingleDigit = skipChar '(' >>. digit .>> skipChar ')'
-    // "(100)", "(MAX)"
-    let sizeAlphaNumeric = skipChar '(' >>. skipMany (letter <|> digit) .>> skipChar ')'
+    
+    let sizeSingleDigit = skipChar '(' >>. digit .>> skipChar ')' // "(1)", "(7)"
+    let sizeMultiDigit = skipChar '(' >>. skipMany digit .>> skipChar ')'
+    let sizeAlphaNumeric = skipChar '(' >>. skipMany (letter <|> digit) .>> skipChar ')' // "(100)", "(MAX)"
+    let sizeScale = skipChar ',' >>. spaces >>. skipMany digit >>. spaces
+    let sizePrecisionScale = skipChar '(' >>. skipMany digit >>. opt sizeScale >>. skipChar ')' 
 
     /// Ex: "VARCHAR (100)", "VARCHAR(MAX)", etc
-    let sizedTextColumn identifier = strCI identifier >>. spaces >>. sizeAlphaNumeric
+    let sizedOrMaxColumn identifier = strCI identifier >>. spaces >>. sizeAlphaNumeric
     let sizedTimeColumn identifier = strCI identifier >>. spaces >>. opt sizeSingleDigit
+    let sizedColumn identifier = strCI identifier >>. spaces >>. opt sizeMultiDigit
+    let sizedDecimalNumeric identifier = strCI identifier >>. spaces >>. opt sizePrecisionScale
 
     /// Implements a parser for each case in Model.DataType.
     let getDataTypeParser dt = 
@@ -55,23 +58,32 @@ module DataTypeParsers =
         | TinyInt -> stringReturn "TINYINT" dt
         | Float -> stringReturn "FLOAT" dt
         | Real -> stringReturn "REAL" dt
-        | VarChar -> sizedTextColumn "VARCHAR" >>% dt
-        | NVarChar -> sizedTextColumn "NVARCHAR" >>% dt
-        | Char -> sizedTextColumn "CHAR" >>% dt
+        | Decimal -> sizedDecimalNumeric "DECIMAL" >>% dt
+        | Numeric -> sizedDecimalNumeric "NUMERIC" >>% dt
+        | Money -> stringReturn "MONEY" dt
+        | SmallMoney -> stringReturn "SMALLMONEY" dt
+        | VarChar -> sizedOrMaxColumn "VARCHAR" >>% dt
+        | NVarChar -> sizedOrMaxColumn "NVARCHAR" >>% dt
+        | Char -> sizedOrMaxColumn "CHAR" >>% dt
+        | NChar -> sizedOrMaxColumn "NCHAR" >>% dt
         | DateTimeOffset -> sizedTimeColumn "DATETIMEOFFSET" >>% dt
         | Date -> stringReturn "DATE" dt
         | DateTime -> stringReturn "DATETIME" dt
         | DateTime2 -> sizedTimeColumn "DATETIME2" >>% dt
         | SmallDateTime -> stringReturn "SMALLDATETIME" dt
         | Time -> sizedTimeColumn "TIME" >>% dt
+        | VarBinary -> sizedOrMaxColumn "VARBINARY" >>% dt
+        | Binary -> sizedColumn "BINARY" >>% dt
+        | RowVersion -> stringReturn "ROWVERSION" dt
+        | Xml -> stringReturn "XML" dt
+        | Geography -> stringReturn "GEOGRAPHY" dt
+        | Geometry -> stringReturn "GEOMETRY" dt
+        | HierarchyId -> stringReturn "HIERARCHYID" dt
     
-    // Will crash if DU contains members which aren't only tags
-    let getNameAndInstance (caseInfo: UnionCaseInfo) = caseInfo.Name, FSharpValue.MakeUnion(caseInfo, [||]) :?> Model.DataType
-
-    /// All supported col data types listed by descending length
+    /// All supported column data types listed by descending length
     let all = 
         FSharpType.GetUnionCases typeof<Model.DataType>
-        |> Array.map getNameAndInstance
+        |> Array.map (fun c -> c.Name, FSharpValue.MakeUnion(c, [||]) :?> Model.DataType) // Will crash if DU contains members which aren't only tags
         |> Array.sortByDescending (fun (name, _) -> name.Length, name) // Longest names first to avoid partial consumption bugs
         |> Array.map snd
         |> Array.map getDataTypeParser

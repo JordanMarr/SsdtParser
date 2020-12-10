@@ -11,7 +11,7 @@ let testParser desc parser (text: string) =
         | Failure(_,error,_) -> failwith $"Error: %A{error}"
 
 let testDataTypeParser desc (dataType: DataType) (text: string) =
-    testParser desc (getDataTypeParser dataType) text
+    testParser desc (DataTypeParsers.getDataTypeParser dataType) text
 
 [<Tests>]
 let tests =
@@ -38,6 +38,7 @@ let tests =
         testDataTypeParser "nvarChar100" NVarChar "NVARCHAR(100)"
         testDataTypeParser "nvarCharMax" NVarChar "NVARCHAR (MAX)"
         testDataTypeParser "char" Char "CHAR (MAX)"
+        testDataTypeParser "nchar" NChar "NCHAR (255)"
         testDataTypeParser "time 7" Time "TIME (7)"
         testDataTypeParser "datetimeoffset 7" DateTimeOffset "DATETIMEOFFSET (7)"
         testDataTypeParser "datetimeoffset" DateTimeOffset "DATETIMEOFFSET"
@@ -51,6 +52,20 @@ let tests =
         testDataTypeParser "smallint" SmallInt "SMALLINT"
         testDataTypeParser "float" Float "FLOAT"
         testDataTypeParser "real" Real "REAL"
+        testDataTypeParser "decimal" Decimal "DECIMAL"
+        testDataTypeParser "decimal (9)" Decimal "DECIMAL(9)"
+        testDataTypeParser "decimal (9, 7)" Decimal "DECIMAL(9, 7)"
+        testDataTypeParser "numeric" Numeric "NUMERIC"
+        testDataTypeParser "numeric (9)" Numeric "NUMERIC(9)"
+        testDataTypeParser "numeric (9, 7)" Numeric "NUMERIC(9, 7)"
+        testDataTypeParser "money" Money "MONEY"
+        testDataTypeParser "smallmoney" SmallMoney "SMALLMONEY"
+        testDataTypeParser "varbinary" VarBinary "VARBINARY(5000)"
+        testDataTypeParser "varbinary max" VarBinary "VARBINARY(MAX)"
+        testDataTypeParser "binary" Binary "BINARY"
+        testDataTypeParser "binary 500" Binary "BINARY (500)"
+        testDataTypeParser "rowversion" RowVersion "ROWVERSION"
+        testDataTypeParser "xml" Xml "XML"
 
         testParser "colConstraint1" colConstraint "CONSTRAINT [PK_DrawingLog] PRIMARY KEY CLUSTERED ([ProjectId]),"
         testParser "colConstraint2" colConstraint "CONSTRAINT [FK_DrawingLog_Projects] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Projects] ([Id])"
