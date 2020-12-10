@@ -22,36 +22,36 @@ and Column = {
 /// All supported SQL Server data types.
 and DataType = 
     // Exact numerics
-    //| BigInt 
+    | BigInt 
     //| Numeric
     | Bit 
-    //| SmallInt
+    | SmallInt
     //| Decimal 
     //| SmallMoney
     | Int 
-    //| TinyInt
+    | TinyInt
     //| Money
 
     // Approximate numerics
-    //| Float
-    //| Real
+    | Float
+    | Real
 
     // Date and time
     | Date
     | DateTimeOffset
-    //| DateTime2
-    //| SmallDateTime
-    //| DateTime
-    //| Time
+    | DateTime2
+    | SmallDateTime
+    | DateTime
+    | Time
 
     // Character strings
-    //| Char
+    | Char
     | VarChar
     //| Text
 
     // Unicode character strings
     //| NChar
-    //| NVarChar
+    | NVarChar
     //| NText
 
     // Binary strings

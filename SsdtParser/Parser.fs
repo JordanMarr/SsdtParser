@@ -31,38 +31,50 @@ let tableHeader =
     .>> skipChar '('
     |>> createTableHeader
 
-/// Implements a parser for each case in Model.DataType.
-let getDataTypeParser = function 
-    | Model.UniqueIdentifier as t -> stringReturn "UNIQUEIDENTIFIER" t
-    | Model.Bit as t -> stringReturn "BIT" t    
-    | Model.Int as t -> stringReturn "INT" t
-    | Model.VarChar as t -> 
-        strCI "VARCHAR" 
-        >>. spaces
-        >>. skipChar '(' 
-        >>. skipMany (letter <|> digit)
-        .>> skipChar ')'
-        >>% t
-    | Model.DateTimeOffset as t -> // must be before date
-        strCI "DATETIMEOFFSET" 
-        >>. spaces
-        >>. skipChar '(' 
-        >>. skipMany digit
-        .>> skipChar ')'
-        >>% t
-    | Model.Date as t -> stringReturn "DATE" t
+// "(1)", "(7)"
+let sizeSingleDigit = skipChar '(' >>. digit .>> skipChar ')'
+// "(100)", "(MAX)"
+let sizeAlphaNumeric = skipChar '(' >>. skipMany (letter <|> digit) .>> skipChar ')'
 
-open Microsoft.FSharp.Reflection
-// Will crash if DU contains members which aren't only tags
-let getNameAndInstance (caseInfo: UnionCaseInfo) = caseInfo.Name, FSharpValue.MakeUnion(caseInfo, [||]) :?> Model.DataType
+/// Ex: "VARCHAR (100)", "VARCHAR(MAX)", etc
+let sizedTextColumn identifier = strCI identifier >>. spaces >>. sizeAlphaNumeric
+let sizedTimeColumn identifier = strCI identifier >>. spaces >>. opt sizeSingleDigit
 
-/// All supported col data types listed by descending length
-let dataTypes = 
-    FSharpType.GetUnionCases typeof<Model.DataType>
-    |> Array.map getNameAndInstance
-    |> Array.sortByDescending (fun (name, _) -> name.Length, name) // Longest names first to avoid partial consumption bugs
-    |> Array.map snd
-    |> Array.map getDataTypeParser
+module DataTypeParsers = 
+    open Model
+    open Microsoft.FSharp.Reflection
+
+    /// Implements a parser for each case in Model.DataType.
+    let getDataTypeParser dt = 
+        match dt with
+        | UniqueIdentifier -> stringReturn "UNIQUEIDENTIFIER" dt
+        | Bit -> stringReturn "BIT" dt    
+        | Int -> stringReturn "INT" dt
+        | BigInt -> stringReturn "BIGINT" dt
+        | SmallInt -> stringReturn "SMALLINT" dt
+        | TinyInt -> stringReturn "TINYINT" dt
+        | Float -> stringReturn "FLOAT" dt
+        | Real -> stringReturn "REAL" dt
+        | VarChar -> sizedTextColumn "VARCHAR" >>% dt
+        | NVarChar -> sizedTextColumn "NVARCHAR" >>% dt
+        | Char -> sizedTextColumn "CHAR" >>% dt
+        | DateTimeOffset -> sizedTimeColumn "DATETIMEOFFSET" >>% dt
+        | Date -> stringReturn "DATE" dt
+        | DateTime -> stringReturn "DATETIME" dt
+        | DateTime2 -> sizedTimeColumn "DATETIME2" >>% dt
+        | SmallDateTime -> stringReturn "SMALLDATETIME" dt
+        | Time -> sizedTimeColumn "TIME" >>% dt
+    
+    // Will crash if DU contains members which aren't only tags
+    let getNameAndInstance (caseInfo: UnionCaseInfo) = caseInfo.Name, FSharpValue.MakeUnion(caseInfo, [||]) :?> Model.DataType
+
+    /// All supported col data types listed by descending length
+    let all = 
+        FSharpType.GetUnionCases typeof<Model.DataType>
+        |> Array.map getNameAndInstance
+        |> Array.sortByDescending (fun (name, _) -> name.Length, name) // Longest names first to avoid partial consumption bugs
+        |> Array.map snd
+        |> Array.map getDataTypeParser
     
 let colDefault = 
     skipString "DEFAULT"
@@ -104,7 +116,7 @@ let column =
     spaces 
     >>. segment
     .>> spaces
-    .>>. choice dataTypes
+    .>>. choice DataTypeParsers.all
     .>> spaces
     .>>. ((stringReturn "NULL" true) <|> (stringReturn "NOT NULL" false))
     .>> spaces
