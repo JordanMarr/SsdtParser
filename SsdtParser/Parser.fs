@@ -94,10 +94,11 @@ let colDefault =
     >>. manyTill anyChar (pchar ',')
 
 let colConstraintType =
+    let clusteredNonClustered = (skipString "CLUSTERED" <|> skipString "NONCLUSTERED")
     choice [ 
-        skipString "PRIMARY KEY CLUSTERED"
+        skipString "PRIMARY KEY " .>> opt clusteredNonClustered
         skipString "FOREIGN KEY" 
-        skipString "UNIQUE" 
+        skipString "UNIQUE" .>> opt clusteredNonClustered
     ]
 
 let colConstraintReference = 
@@ -121,7 +122,7 @@ let colConstraint =
 let createColumn ((name, dataType), allowNulls) =
     { Model.Column.Name = name
       Model.Column.DataType = dataType
-      Model.Column.AllowNulls = allowNulls
+      Model.Column.AllowNulls = allowNulls |> Option.defaultValue true
       Model.Column.Default = None }
 
 let column = 
@@ -130,7 +131,7 @@ let column =
     .>> spaces
     .>>. choice DataTypeParsers.all
     .>> spaces
-    .>>. ((stringReturn "NULL" true) <|> (stringReturn "NOT NULL" false))
+    .>>. opt ((stringReturn "NULL" true) <|> (stringReturn "NOT NULL" false))
     .>> spaces
     .>> opt (spaces >>. colDefault >>. spaces)
     |>> createColumn
