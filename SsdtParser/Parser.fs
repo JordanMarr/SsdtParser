@@ -31,18 +31,18 @@ let tableHeader =
     .>> skipChar '('
     |>> createTableHeader
 
-// "(1)", "(7)"
-let sizeSingleDigit = skipChar '(' >>. digit .>> skipChar ')'
-// "(100)", "(MAX)"
-let sizeAlphaNumeric = skipChar '(' >>. skipMany (letter <|> digit) .>> skipChar ')'
-
-/// Ex: "VARCHAR (100)", "VARCHAR(MAX)", etc
-let sizedTextColumn identifier = strCI identifier >>. spaces >>. sizeAlphaNumeric
-let sizedTimeColumn identifier = strCI identifier >>. spaces >>. opt sizeSingleDigit
-
 module DataTypeParsers = 
     open Model
     open Microsoft.FSharp.Reflection
+
+    // "(1)", "(7)"
+    let sizeSingleDigit = skipChar '(' >>. digit .>> skipChar ')'
+    // "(100)", "(MAX)"
+    let sizeAlphaNumeric = skipChar '(' >>. skipMany (letter <|> digit) .>> skipChar ')'
+
+    /// Ex: "VARCHAR (100)", "VARCHAR(MAX)", etc
+    let sizedTextColumn identifier = strCI identifier >>. spaces >>. sizeAlphaNumeric
+    let sizedTimeColumn identifier = strCI identifier >>. spaces >>. opt sizeSingleDigit
 
     /// Implements a parser for each case in Model.DataType.
     let getDataTypeParser dt = 
