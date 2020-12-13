@@ -13,6 +13,7 @@ type Table = {
     Schema: string
     Name: string
     Columns: Column list
+    PrimaryKeys: PrimaryKeyConstraint list
     ForeignKeys: ForeignKeyConstraint list
 }
 and Column = {
@@ -28,6 +29,10 @@ and ForeignKeyConstraint = {
 and RefTable = {
     Schema: string
     Table: string
+    Columns: string list
+}
+and PrimaryKeyConstraint = {
+    Name: string
     Columns: string list
 }
 
@@ -85,6 +90,21 @@ let tests =
                 )
                 |> Seq.toList
 
+            let primaryKeyConstraints = 
+                tblStatement.SelectSingleNode("SqlTableDefinition").SelectNodes("SqlPrimaryKeyConstraint")
+                |> Seq.cast<XmlNode>
+                |> Seq.map (fun pkc -> 
+                    let name = pkc |> att "Name"
+                    let cols = 
+                        pkc.SelectNodes("SqlIndexedColumn")
+                        |> Seq.cast<XmlNode>
+                        |> Seq.map (att "Name")
+                        |> Seq.toList
+                    { PrimaryKeyConstraint.Name = name
+                      PrimaryKeyConstraint.Columns = cols }
+                )
+                |> Seq.toList
+
             let foreignKeyConstraints = 
                 tblStatement.SelectSingleNode("SqlTableDefinition").SelectNodes("SqlForeignKeyConstraint")
                 |> Seq.cast<XmlNode> 
@@ -123,6 +143,7 @@ let tests =
                 { Table.Schema = tblSchemaName 
                   Table.Name = tblObjectName
                   Table.Columns = cols
+                  Table.PrimaryKeys = primaryKeyConstraints
                   Table.ForeignKeys = foreignKeyConstraints }
 
             printfn "Table: %A" table
