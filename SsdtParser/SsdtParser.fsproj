@@ -8,7 +8,6 @@
   <ItemGroup>
     <Compile Include="Model.fs" />
     <Compile Include="Parser.fs" />
-    <None Include="ParserTests.fsx" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

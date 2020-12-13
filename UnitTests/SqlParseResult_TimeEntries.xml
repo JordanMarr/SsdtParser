@@ -1,0 +1,676 @@
+<SqlScript Location="((1,1), (17,19))">
+  <!--CREATE TABLE [dbo].[TimeEntries] (
+                [Id]        UNIQUEIDENTIFIER   NOT NULL,
+                [ProjectId] UNIQUEIDENTIFIER   NOT NULL,
+                [TaskId]    UNIQUEIDENTIFIER   NOT NULL,
+                [SheetId]   UNIQUEIDENTIFIER   NULL,
+                [Username]  VARCHAR (100)      NOT NULL,
+                [Email]     VARCHAR (100)      NULL,
+                [Date]      DATE               NOT NULL,
+                [Hours]     FLOAT (53)         NOT NULL,
+                [Created]   DATETIMEOFFSET (0) CONSTRAINT [DF_TimeEntries_Created] DEFAULT (getutcdate()) NOT NULL,
+                [Updated]   DATETIMEOFFSET (0) CONSTRAINT [DF_TimeEntries_Updated] DEFAULT (getutcdate()) NOT NULL,
+                CONSTRAINT [PK_TimeEntries] PRIMARY KEY CLUSTERED ([Id] ASC),
+                CONSTRAINT [FK_TimeEntries_Projects] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Projects] ([Id]),
+                CONSTRAINT [FK_TimeEntries_ProjectTasks] FOREIGN KEY ([TaskId]) REFERENCES [dbo].[ProjectTasks] ([Id]),
+                CONSTRAINT [FK_TimeEntries_DrawingLogSheets] FOREIGN KEY ([SheetId]) REFERENCES [dbo].[DrawingLogSheets] ([Id]),
+                CONSTRAINT [UQ_TimeEntries_TaskId_Email_Date_Sheet] UNIQUE NONCLUSTERED ([TaskId] ASC, [Email] ASC, [Date] ASC, [SheetId] ASC)
+                );-->
+  <Errors />
+  <SqlBatch Location="((1,1), (17,19))">
+    <!--CREATE TABLE [dbo].[TimeEntries] (
+                [Id]        UNIQUEIDENTIFIER   NOT NULL,
+                [ProjectId] UNIQUEIDENTIFIER   NOT NULL,
+                [TaskId]    UNIQUEIDENTIFIER   NOT NULL,
+                [SheetId]   UNIQUEIDENTIFIER   NULL,
+                [Username]  VARCHAR (100)      NOT NULL,
+                [Email]     VARCHAR (100)      NULL,
+                [Date]      DATE               NOT NULL,
+                [Hours]     FLOAT (53)         NOT NULL,
+                [Created]   DATETIMEOFFSET (0) CONSTRAINT [DF_TimeEntries_Created] DEFAULT (getutcdate()) NOT NULL,
+                [Updated]   DATETIMEOFFSET (0) CONSTRAINT [DF_TimeEntries_Updated] DEFAULT (getutcdate()) NOT NULL,
+                CONSTRAINT [PK_TimeEntries] PRIMARY KEY CLUSTERED ([Id] ASC),
+                CONSTRAINT [FK_TimeEntries_Projects] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Projects] ([Id]),
+                CONSTRAINT [FK_TimeEntries_ProjectTasks] FOREIGN KEY ([TaskId]) REFERENCES [dbo].[ProjectTasks] ([Id]),
+                CONSTRAINT [FK_TimeEntries_DrawingLogSheets] FOREIGN KEY ([SheetId]) REFERENCES [dbo].[DrawingLogSheets] ([Id]),
+                CONSTRAINT [UQ_TimeEntries_TaskId_Email_Date_Sheet] UNIQUE NONCLUSTERED ([TaskId] ASC, [Email] ASC, [Date] ASC, [SheetId] ASC)
+                );-->
+    <SqlCreateTableStatement Location="((1,1),(17,18))" Name="dbo.TimeEntries">
+      <!--CREATE TABLE [dbo].[TimeEntries] (
+                [Id]        UNIQUEIDENTIFIER   NOT NULL,
+                [ProjectId] UNIQUEIDENTIFIER   NOT NULL,
+                [TaskId]    UNIQUEIDENTIFIER   NOT NULL,
+                [SheetId]   UNIQUEIDENTIFIER   NULL,
+                [Username]  VARCHAR (100)      NOT NULL,
+                [Email]     VARCHAR (100)      NULL,
+                [Date]      DATE               NOT NULL,
+                [Hours]     FLOAT (53)         NOT NULL,
+                [Created]   DATETIMEOFFSET (0) CONSTRAINT [DF_TimeEntries_Created] DEFAULT (getutcdate()) NOT NULL,
+                [Updated]   DATETIMEOFFSET (0) CONSTRAINT [DF_TimeEntries_Updated] DEFAULT (getutcdate()) NOT NULL,
+                CONSTRAINT [PK_TimeEntries] PRIMARY KEY CLUSTERED ([Id] ASC),
+                CONSTRAINT [FK_TimeEntries_Projects] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Projects] ([Id]),
+                CONSTRAINT [FK_TimeEntries_ProjectTasks] FOREIGN KEY ([TaskId]) REFERENCES [dbo].[ProjectTasks] ([Id]),
+                CONSTRAINT [FK_TimeEntries_DrawingLogSheets] FOREIGN KEY ([SheetId]) REFERENCES [dbo].[DrawingLogSheets] ([Id]),
+                CONSTRAINT [UQ_TimeEntries_TaskId_Email_Date_Sheet] UNIQUE NONCLUSTERED ([TaskId] ASC, [Email] ASC, [Date] ASC, [SheetId] ASC)
+                )-->
+      <SqlObjectIdentifier Location="((1,14),(1,33))" SchemaName="dbo" ObjectName="TimeEntries">
+        <!--[dbo].[TimeEntries]-->
+        <SqlIdentifier Location="((1,14),(1,19))" Value="dbo">
+          <!--[dbo]-->
+        </SqlIdentifier>
+        <SqlIdentifier Location="((1,20),(1,33))" Value="TimeEntries">
+          <!--[TimeEntries]-->
+        </SqlIdentifier>
+      </SqlObjectIdentifier>
+      <SqlTableDefinition Location="((2,17),(16,143))">
+        <!--[Id]        UNIQUEIDENTIFIER   NOT NULL,
+                [ProjectId] UNIQUEIDENTIFIER   NOT NULL,
+                [TaskId]    UNIQUEIDENTIFIER   NOT NULL,
+                [SheetId]   UNIQUEIDENTIFIER   NULL,
+                [Username]  VARCHAR (100)      NOT NULL,
+                [Email]     VARCHAR (100)      NULL,
+                [Date]      DATE               NOT NULL,
+                [Hours]     FLOAT (53)         NOT NULL,
+                [Created]   DATETIMEOFFSET (0) CONSTRAINT [DF_TimeEntries_Created] DEFAULT (getutcdate()) NOT NULL,
+                [Updated]   DATETIMEOFFSET (0) CONSTRAINT [DF_TimeEntries_Updated] DEFAULT (getutcdate()) NOT NULL,
+                CONSTRAINT [PK_TimeEntries] PRIMARY KEY CLUSTERED ([Id] ASC),
+                CONSTRAINT [FK_TimeEntries_Projects] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Projects] ([Id]),
+                CONSTRAINT [FK_TimeEntries_ProjectTasks] FOREIGN KEY ([TaskId]) REFERENCES [dbo].[ProjectTasks] ([Id]),
+                CONSTRAINT [FK_TimeEntries_DrawingLogSheets] FOREIGN KEY ([SheetId]) REFERENCES [dbo].[DrawingLogSheets] ([Id]),
+                CONSTRAINT [UQ_TimeEntries_TaskId_Email_Date_Sheet] UNIQUE NONCLUSTERED ([TaskId] ASC, [Email] ASC, [Date] ASC, [SheetId] ASC)-->
+        <SqlColumnDefinition Location="((2,17),(2,56))" Name="Id" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[Id]        UNIQUEIDENTIFIER   NOT NULL-->
+          <SqlIdentifier Location="((2,17),(2,21))" Value="Id">
+            <!--[Id]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((2,29),(2,45))" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--UNIQUEIDENTIFIER-->
+            <SqlDataType Location="((2,29),(2,45))" ObjectIdentifier="UNIQUEIDENTIFIER" National="False" Varying="False">
+              <!--UNIQUEIDENTIFIER-->
+              <SqlObjectIdentifier Location="((2,29),(2,45))" ObjectName="UNIQUEIDENTIFIER">
+                <!--UNIQUEIDENTIFIER-->
+                <SqlIdentifier Location="((2,29),(2,45))" Value="UNIQUEIDENTIFIER">
+                  <!--UNIQUEIDENTIFIER-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlConstraint Location="((2,48),(2,56))" Type="NotNull">
+            <!--NOT NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+        <SqlColumnDefinition Location="((3,17),(3,56))" Name="ProjectId" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[ProjectId] UNIQUEIDENTIFIER   NOT NULL-->
+          <SqlIdentifier Location="((3,17),(3,28))" Value="ProjectId">
+            <!--[ProjectId]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((3,29),(3,45))" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--UNIQUEIDENTIFIER-->
+            <SqlDataType Location="((3,29),(3,45))" ObjectIdentifier="UNIQUEIDENTIFIER" National="False" Varying="False">
+              <!--UNIQUEIDENTIFIER-->
+              <SqlObjectIdentifier Location="((3,29),(3,45))" ObjectName="UNIQUEIDENTIFIER">
+                <!--UNIQUEIDENTIFIER-->
+                <SqlIdentifier Location="((3,29),(3,45))" Value="UNIQUEIDENTIFIER">
+                  <!--UNIQUEIDENTIFIER-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlConstraint Location="((3,48),(3,56))" Type="NotNull">
+            <!--NOT NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+        <SqlColumnDefinition Location="((4,17),(4,56))" Name="TaskId" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[TaskId]    UNIQUEIDENTIFIER   NOT NULL-->
+          <SqlIdentifier Location="((4,17),(4,25))" Value="TaskId">
+            <!--[TaskId]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((4,29),(4,45))" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--UNIQUEIDENTIFIER-->
+            <SqlDataType Location="((4,29),(4,45))" ObjectIdentifier="UNIQUEIDENTIFIER" National="False" Varying="False">
+              <!--UNIQUEIDENTIFIER-->
+              <SqlObjectIdentifier Location="((4,29),(4,45))" ObjectName="UNIQUEIDENTIFIER">
+                <!--UNIQUEIDENTIFIER-->
+                <SqlIdentifier Location="((4,29),(4,45))" Value="UNIQUEIDENTIFIER">
+                  <!--UNIQUEIDENTIFIER-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlConstraint Location="((4,48),(4,56))" Type="NotNull">
+            <!--NOT NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+        <SqlColumnDefinition Location="((5,17),(5,52))" Name="SheetId" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[SheetId]   UNIQUEIDENTIFIER   NULL-->
+          <SqlIdentifier Location="((5,17),(5,26))" Value="SheetId">
+            <!--[SheetId]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((5,29),(5,45))" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--UNIQUEIDENTIFIER-->
+            <SqlDataType Location="((5,29),(5,45))" ObjectIdentifier="UNIQUEIDENTIFIER" National="False" Varying="False">
+              <!--UNIQUEIDENTIFIER-->
+              <SqlObjectIdentifier Location="((5,29),(5,45))" ObjectName="UNIQUEIDENTIFIER">
+                <!--UNIQUEIDENTIFIER-->
+                <SqlIdentifier Location="((5,29),(5,45))" Value="UNIQUEIDENTIFIER">
+                  <!--UNIQUEIDENTIFIER-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlConstraint Location="((5,48),(5,52))" Type="Null">
+            <!--NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+        <SqlColumnDefinition Location="((6,17),(6,56))" Name="Username" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[Username]  VARCHAR (100)      NOT NULL-->
+          <SqlIdentifier Location="((6,17),(6,27))" Value="Username">
+            <!--[Username]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((6,29),(6,42))" Argument1="100" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--VARCHAR (100)-->
+            <SqlDataType Location="((6,29),(6,36))" ObjectIdentifier="VARCHAR" National="False" Varying="False">
+              <!--VARCHAR-->
+              <SqlObjectIdentifier Location="((6,29),(6,36))" ObjectName="VARCHAR">
+                <!--VARCHAR-->
+                <SqlIdentifier Location="((6,29),(6,36))" Value="VARCHAR">
+                  <!--VARCHAR-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlConstraint Location="((6,48),(6,56))" Type="NotNull">
+            <!--NOT NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+        <SqlColumnDefinition Location="((7,17),(7,52))" Name="Email" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[Email]     VARCHAR (100)      NULL-->
+          <SqlIdentifier Location="((7,17),(7,24))" Value="Email">
+            <!--[Email]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((7,29),(7,42))" Argument1="100" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--VARCHAR (100)-->
+            <SqlDataType Location="((7,29),(7,36))" ObjectIdentifier="VARCHAR" National="False" Varying="False">
+              <!--VARCHAR-->
+              <SqlObjectIdentifier Location="((7,29),(7,36))" ObjectName="VARCHAR">
+                <!--VARCHAR-->
+                <SqlIdentifier Location="((7,29),(7,36))" Value="VARCHAR">
+                  <!--VARCHAR-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlConstraint Location="((7,48),(7,52))" Type="Null">
+            <!--NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+        <SqlColumnDefinition Location="((8,17),(8,56))" Name="Date" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[Date]      DATE               NOT NULL-->
+          <SqlIdentifier Location="((8,17),(8,23))" Value="Date">
+            <!--[Date]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((8,29),(8,33))" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--DATE-->
+            <SqlDataType Location="((8,29),(8,33))" ObjectIdentifier="DATE" National="False" Varying="False">
+              <!--DATE-->
+              <SqlObjectIdentifier Location="((8,29),(8,33))" ObjectName="DATE">
+                <!--DATE-->
+                <SqlIdentifier Location="((8,29),(8,33))" Value="DATE">
+                  <!--DATE-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlConstraint Location="((8,48),(8,56))" Type="NotNull">
+            <!--NOT NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+        <SqlColumnDefinition Location="((9,17),(9,56))" Name="Hours" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[Hours]     FLOAT (53)         NOT NULL-->
+          <SqlIdentifier Location="((9,17),(9,24))" Value="Hours">
+            <!--[Hours]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((9,29),(9,39))" Argument1="53" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--FLOAT (53)-->
+            <SqlDataType Location="((9,29),(9,34))" ObjectIdentifier="FLOAT" National="False" Varying="False">
+              <!--FLOAT-->
+              <SqlObjectIdentifier Location="((9,29),(9,34))" ObjectName="FLOAT">
+                <!--FLOAT-->
+                <SqlIdentifier Location="((9,29),(9,34))" Value="FLOAT">
+                  <!--FLOAT-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlConstraint Location="((9,48),(9,56))" Type="NotNull">
+            <!--NOT NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+        <SqlColumnDefinition Location="((10,17),(10,115))" Name="Created" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[Created]   DATETIMEOFFSET (0) CONSTRAINT [DF_TimeEntries_Created] DEFAULT (getutcdate()) NOT NULL-->
+          <SqlIdentifier Location="((10,17),(10,26))" Value="Created">
+            <!--[Created]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((10,29),(10,47))" Argument1="0" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--DATETIMEOFFSET (0)-->
+            <SqlDataType Location="((10,29),(10,43))" ObjectIdentifier="DATETIMEOFFSET" National="False" Varying="False">
+              <!--DATETIMEOFFSET-->
+              <SqlObjectIdentifier Location="((10,29),(10,43))" ObjectName="DATETIMEOFFSET">
+                <!--DATETIMEOFFSET-->
+                <SqlIdentifier Location="((10,29),(10,43))" Value="DATETIMEOFFSET">
+                  <!--DATETIMEOFFSET-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlDefaultConstraint Location="((10,48),(10,106))" Name="DF_TimeEntries_Created" Type="Default">
+            <!--CONSTRAINT [DF_TimeEntries_Created] DEFAULT (getutcdate())-->
+            <SqlIdentifier Location="((10,59),(10,83))" Value="DF_TimeEntries_Created">
+              <!--[DF_TimeEntries_Created]-->
+            </SqlIdentifier>
+            <SqlBuiltinScalarFunctionCallExpression Location="((10,92),(10,106))" FunctionName="getutcdate" IsStar="False">
+              <!--(getutcdate())-->
+            </SqlBuiltinScalarFunctionCallExpression>
+          </SqlDefaultConstraint>
+          <SqlConstraint Location="((10,107),(10,115))" Type="NotNull">
+            <!--NOT NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+        <SqlColumnDefinition Location="((11,17),(11,115))" Name="Updated" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[Updated]   DATETIMEOFFSET (0) CONSTRAINT [DF_TimeEntries_Updated] DEFAULT (getutcdate()) NOT NULL-->
+          <SqlIdentifier Location="((11,17),(11,26))" Value="Updated">
+            <!--[Updated]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((11,29),(11,47))" Argument1="0" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--DATETIMEOFFSET (0)-->
+            <SqlDataType Location="((11,29),(11,43))" ObjectIdentifier="DATETIMEOFFSET" National="False" Varying="False">
+              <!--DATETIMEOFFSET-->
+              <SqlObjectIdentifier Location="((11,29),(11,43))" ObjectName="DATETIMEOFFSET">
+                <!--DATETIMEOFFSET-->
+                <SqlIdentifier Location="((11,29),(11,43))" Value="DATETIMEOFFSET">
+                  <!--DATETIMEOFFSET-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlDefaultConstraint Location="((11,48),(11,106))" Name="DF_TimeEntries_Updated" Type="Default">
+            <!--CONSTRAINT [DF_TimeEntries_Updated] DEFAULT (getutcdate())-->
+            <SqlIdentifier Location="((11,59),(11,83))" Value="DF_TimeEntries_Updated">
+              <!--[DF_TimeEntries_Updated]-->
+            </SqlIdentifier>
+            <SqlBuiltinScalarFunctionCallExpression Location="((11,92),(11,106))" FunctionName="getutcdate" IsStar="False">
+              <!--(getutcdate())-->
+            </SqlBuiltinScalarFunctionCallExpression>
+          </SqlDefaultConstraint>
+          <SqlConstraint Location="((11,107),(11,115))" Type="NotNull">
+            <!--NOT NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+        <SqlPrimaryKeyConstraint Location="((12,17),(12,77))" ClusterOption="Clustered" Name="PK_TimeEntries" Type="PrimaryKey">
+          <!--CONSTRAINT [PK_TimeEntries] PRIMARY KEY CLUSTERED ([Id] ASC)-->
+          <SqlIdentifier Location="((12,28),(12,44))" Value="PK_TimeEntries">
+            <!--[PK_TimeEntries]-->
+          </SqlIdentifier>
+          <SqlIndexedColumn Location="((12,68),(12,76))" Name="Id" SortOrder="Ascending">
+            <!--[Id] ASC-->
+            <SqlIdentifier Location="((12,68),(12,72))" Value="Id">
+              <!--[Id]-->
+            </SqlIdentifier>
+          </SqlIndexedColumn>
+        </SqlPrimaryKeyConstraint>
+        <SqlForeignKeyConstraint Location="((13,17),(13,114))" ReferencedTable="dbo.Projects" DeleteAction="None" UpdateAction="None" NotForReplication="False" Name="FK_TimeEntries_Projects" Type="ForeignKey">
+          <!--CONSTRAINT [FK_TimeEntries_Projects] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Projects] ([Id])-->
+          <SqlIdentifier Location="((13,28),(13,53))" Value="FK_TimeEntries_Projects">
+            <!--[FK_TimeEntries_Projects]-->
+          </SqlIdentifier>
+          <SqlIdentifier Location="((13,67),(13,78))" Value="ProjectId">
+            <!--[ProjectId]-->
+          </SqlIdentifier>
+          <SqlObjectIdentifier Location="((13,91),(13,107))" SchemaName="dbo" ObjectName="Projects">
+            <!--[dbo].[Projects]-->
+            <SqlIdentifier Location="((13,91),(13,96))" Value="dbo">
+              <!--[dbo]-->
+            </SqlIdentifier>
+            <SqlIdentifier Location="((13,97),(13,107))" Value="Projects">
+              <!--[Projects]-->
+            </SqlIdentifier>
+          </SqlObjectIdentifier>
+          <SqlIdentifier Location="((13,109),(13,113))" Value="Id">
+            <!--[Id]-->
+          </SqlIdentifier>
+        </SqlForeignKeyConstraint>
+        <SqlForeignKeyConstraint Location="((14,17),(14,119))" ReferencedTable="dbo.ProjectTasks" DeleteAction="None" UpdateAction="None" NotForReplication="False" Name="FK_TimeEntries_ProjectTasks" Type="ForeignKey">
+          <!--CONSTRAINT [FK_TimeEntries_ProjectTasks] FOREIGN KEY ([TaskId]) REFERENCES [dbo].[ProjectTasks] ([Id])-->
+          <SqlIdentifier Location="((14,28),(14,57))" Value="FK_TimeEntries_ProjectTasks">
+            <!--[FK_TimeEntries_ProjectTasks]-->
+          </SqlIdentifier>
+          <SqlIdentifier Location="((14,71),(14,79))" Value="TaskId">
+            <!--[TaskId]-->
+          </SqlIdentifier>
+          <SqlObjectIdentifier Location="((14,92),(14,112))" SchemaName="dbo" ObjectName="ProjectTasks">
+            <!--[dbo].[ProjectTasks]-->
+            <SqlIdentifier Location="((14,92),(14,97))" Value="dbo">
+              <!--[dbo]-->
+            </SqlIdentifier>
+            <SqlIdentifier Location="((14,98),(14,112))" Value="ProjectTasks">
+              <!--[ProjectTasks]-->
+            </SqlIdentifier>
+          </SqlObjectIdentifier>
+          <SqlIdentifier Location="((14,114),(14,118))" Value="Id">
+            <!--[Id]-->
+          </SqlIdentifier>
+        </SqlForeignKeyConstraint>
+        <SqlForeignKeyConstraint Location="((15,17),(15,128))" ReferencedTable="dbo.DrawingLogSheets" DeleteAction="None" UpdateAction="None" NotForReplication="False" Name="FK_TimeEntries_DrawingLogSheets" Type="ForeignKey">
+          <!--CONSTRAINT [FK_TimeEntries_DrawingLogSheets] FOREIGN KEY ([SheetId]) REFERENCES [dbo].[DrawingLogSheets] ([Id])-->
+          <SqlIdentifier Location="((15,28),(15,61))" Value="FK_TimeEntries_DrawingLogSheets">
+            <!--[FK_TimeEntries_DrawingLogSheets]-->
+          </SqlIdentifier>
+          <SqlIdentifier Location="((15,75),(15,84))" Value="SheetId">
+            <!--[SheetId]-->
+          </SqlIdentifier>
+          <SqlObjectIdentifier Location="((15,97),(15,121))" SchemaName="dbo" ObjectName="DrawingLogSheets">
+            <!--[dbo].[DrawingLogSheets]-->
+            <SqlIdentifier Location="((15,97),(15,102))" Value="dbo">
+              <!--[dbo]-->
+            </SqlIdentifier>
+            <SqlIdentifier Location="((15,103),(15,121))" Value="DrawingLogSheets">
+              <!--[DrawingLogSheets]-->
+            </SqlIdentifier>
+          </SqlObjectIdentifier>
+          <SqlIdentifier Location="((15,123),(15,127))" Value="Id">
+            <!--[Id]-->
+          </SqlIdentifier>
+        </SqlForeignKeyConstraint>
+        <SqlUniqueConstraint Location="((16,17),(16,143))" ClusterOption="NonClustered" Name="UQ_TimeEntries_TaskId_Email_Date_Sheet" Type="Unique">
+          <!--CONSTRAINT [UQ_TimeEntries_TaskId_Email_Date_Sheet] UNIQUE NONCLUSTERED ([TaskId] ASC, [Email] ASC, [Date] ASC, [SheetId] ASC)-->
+          <SqlIdentifier Location="((16,28),(16,68))" Value="UQ_TimeEntries_TaskId_Email_Date_Sheet">
+            <!--[UQ_TimeEntries_TaskId_Email_Date_Sheet]-->
+          </SqlIdentifier>
+          <SqlIndexedColumn Location="((16,90),(16,102))" Name="TaskId" SortOrder="Ascending">
+            <!--[TaskId] ASC-->
+            <SqlIdentifier Location="((16,90),(16,98))" Value="TaskId">
+              <!--[TaskId]-->
+            </SqlIdentifier>
+          </SqlIndexedColumn>
+          <SqlIndexedColumn Location="((16,104),(16,115))" Name="Email" SortOrder="Ascending">
+            <!--[Email] ASC-->
+            <SqlIdentifier Location="((16,104),(16,111))" Value="Email">
+              <!--[Email]-->
+            </SqlIdentifier>
+          </SqlIndexedColumn>
+          <SqlIndexedColumn Location="((16,117),(16,127))" Name="Date" SortOrder="Ascending">
+            <!--[Date] ASC-->
+            <SqlIdentifier Location="((16,117),(16,123))" Value="Date">
+              <!--[Date]-->
+            </SqlIdentifier>
+          </SqlIndexedColumn>
+          <SqlIndexedColumn Location="((16,129),(16,142))" Name="SheetId" SortOrder="Ascending">
+            <!--[SheetId] ASC-->
+            <SqlIdentifier Location="((16,129),(16,138))" Value="SheetId">
+              <!--[SheetId]-->
+            </SqlIdentifier>
+          </SqlIndexedColumn>
+        </SqlUniqueConstraint>
+      </SqlTableDefinition>
+    </SqlCreateTableStatement>
+    <Tokens>
+      <Token location="((1,1), (1,7))" id="145" type="TOKEN_CREATE">CREATE</Token>
+      <Token location="((1,7), (1,8))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((1,8), (1,13))" id="293" type="TOKEN_TABLE">TABLE</Token>
+      <Token location="((1,13), (1,14))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((1,14), (1,19))" id="173" type="TOKEN_ID">[dbo]</Token>
+      <Token location="((1,19), (1,20))" id="46" type=".">.</Token>
+      <Token location="((1,20), (1,33))" id="173" type="TOKEN_ID">[TimeEntries]</Token>
+      <Token location="((1,33), (1,34))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((1,34), (1,35))" id="40" type="(">(</Token>
+      <Token location="((1,35), (2,17))" id="943" type="LEX_WHITE">\r\n                </Token>
+      <Token location="((2,17), (2,21))" id="173" type="TOKEN_ID">[Id]</Token>
+      <Token location="((2,21), (2,29))" id="943" type="LEX_WHITE">        </Token>
+      <Token location="((2,29), (2,45))" id="173" type="TOKEN_ID">UNIQUEIDENTIFIER</Token>
+      <Token location="((2,45), (2,48))" id="943" type="LEX_WHITE">   </Token>
+      <Token location="((2,48), (2,51))" id="137" type="TOKEN_NOT">NOT</Token>
+      <Token location="((2,51), (2,52))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((2,52), (2,56))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((2,56), (2,57))" id="44" type=",">,</Token>
+      <Token location="((2,57), (3,17))" id="943" type="LEX_WHITE">\r\n                </Token>
+      <Token location="((3,17), (3,28))" id="173" type="TOKEN_ID">[ProjectId]</Token>
+      <Token location="((3,28), (3,29))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((3,29), (3,45))" id="173" type="TOKEN_ID">UNIQUEIDENTIFIER</Token>
+      <Token location="((3,45), (3,48))" id="943" type="LEX_WHITE">   </Token>
+      <Token location="((3,48), (3,51))" id="137" type="TOKEN_NOT">NOT</Token>
+      <Token location="((3,51), (3,52))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((3,52), (3,56))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((3,56), (3,57))" id="44" type=",">,</Token>
+      <Token location="((3,57), (4,17))" id="943" type="LEX_WHITE">\r\n                </Token>
+      <Token location="((4,17), (4,25))" id="173" type="TOKEN_ID">[TaskId]</Token>
+      <Token location="((4,25), (4,29))" id="943" type="LEX_WHITE">    </Token>
+      <Token location="((4,29), (4,45))" id="173" type="TOKEN_ID">UNIQUEIDENTIFIER</Token>
+      <Token location="((4,45), (4,48))" id="943" type="LEX_WHITE">   </Token>
+      <Token location="((4,48), (4,51))" id="137" type="TOKEN_NOT">NOT</Token>
+      <Token location="((4,51), (4,52))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((4,52), (4,56))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((4,56), (4,57))" id="44" type=",">,</Token>
+      <Token location="((4,57), (5,17))" id="943" type="LEX_WHITE">\r\n                </Token>
+      <Token location="((5,17), (5,26))" id="173" type="TOKEN_ID">[SheetId]</Token>
+      <Token location="((5,26), (5,29))" id="943" type="LEX_WHITE">   </Token>
+      <Token location="((5,29), (5,45))" id="173" type="TOKEN_ID">UNIQUEIDENTIFIER</Token>
+      <Token location="((5,45), (5,48))" id="943" type="LEX_WHITE">   </Token>
+      <Token location="((5,48), (5,52))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((5,52), (5,53))" id="44" type=",">,</Token>
+      <Token location="((5,53), (6,17))" id="943" type="LEX_WHITE">\r\n                </Token>
+      <Token location="((6,17), (6,27))" id="173" type="TOKEN_ID">[Username]</Token>
+      <Token location="((6,27), (6,29))" id="943" type="LEX_WHITE">  </Token>
+      <Token location="((6,29), (6,36))" id="173" type="TOKEN_ID">VARCHAR</Token>
+      <Token location="((6,36), (6,37))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((6,37), (6,38))" id="40" type="(">(</Token>
+      <Token location="((6,38), (6,41))" id="182" type="TOKEN_INTEGER">100</Token>
+      <Token location="((6,41), (6,42))" id="41" type=")">)</Token>
+      <Token location="((6,42), (6,48))" id="943" type="LEX_WHITE">      </Token>
+      <Token location="((6,48), (6,51))" id="137" type="TOKEN_NOT">NOT</Token>
+      <Token location="((6,51), (6,52))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((6,52), (6,56))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((6,56), (6,57))" id="44" type=",">,</Token>
+      <Token location="((6,57), (7,17))" id="943" type="LEX_WHITE">\r\n                </Token>
+      <Token location="((7,17), (7,24))" id="173" type="TOKEN_ID">[Email]</Token>
+      <Token location="((7,24), (7,29))" id="943" type="LEX_WHITE">     </Token>
+      <Token location="((7,29), (7,36))" id="173" type="TOKEN_ID">VARCHAR</Token>
+      <Token location="((7,36), (7,37))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((7,37), (7,38))" id="40" type="(">(</Token>
+      <Token location="((7,38), (7,41))" id="182" type="TOKEN_INTEGER">100</Token>
+      <Token location="((7,41), (7,42))" id="41" type=")">)</Token>
+      <Token location="((7,42), (7,48))" id="943" type="LEX_WHITE">      </Token>
+      <Token location="((7,48), (7,52))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((7,52), (7,53))" id="44" type=",">,</Token>
+      <Token location="((7,53), (8,17))" id="943" type="LEX_WHITE">\r\n                </Token>
+      <Token location="((8,17), (8,23))" id="173" type="TOKEN_ID">[Date]</Token>
+      <Token location="((8,23), (8,29))" id="943" type="LEX_WHITE">      </Token>
+      <Token location="((8,29), (8,33))" id="173" type="TOKEN_ID">DATE</Token>
+      <Token location="((8,33), (8,48))" id="943" type="LEX_WHITE">               </Token>
+      <Token location="((8,48), (8,51))" id="137" type="TOKEN_NOT">NOT</Token>
+      <Token location="((8,51), (8,52))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((8,52), (8,56))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((8,56), (8,57))" id="44" type=",">,</Token>
+      <Token location="((8,57), (9,17))" id="943" type="LEX_WHITE">\r\n                </Token>
+      <Token location="((9,17), (9,24))" id="173" type="TOKEN_ID">[Hours]</Token>
+      <Token location="((9,24), (9,29))" id="943" type="LEX_WHITE">     </Token>
+      <Token location="((9,29), (9,34))" id="173" type="TOKEN_ID">FLOAT</Token>
+      <Token location="((9,34), (9,35))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((9,35), (9,36))" id="40" type="(">(</Token>
+      <Token location="((9,36), (9,38))" id="182" type="TOKEN_INTEGER">53</Token>
+      <Token location="((9,38), (9,39))" id="41" type=")">)</Token>
+      <Token location="((9,39), (9,48))" id="943" type="LEX_WHITE">         </Token>
+      <Token location="((9,48), (9,51))" id="137" type="TOKEN_NOT">NOT</Token>
+      <Token location="((9,51), (9,52))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((9,52), (9,56))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((9,56), (9,57))" id="44" type=",">,</Token>
+      <Token location="((9,57), (10,17))" id="943" type="LEX_WHITE">\r\n                </Token>
+      <Token location="((10,17), (10,26))" id="173" type="TOKEN_ID">[Created]</Token>
+      <Token location="((10,26), (10,29))" id="943" type="LEX_WHITE">   </Token>
+      <Token location="((10,29), (10,43))" id="173" type="TOKEN_ID">DATETIMEOFFSET</Token>
+      <Token location="((10,43), (10,44))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((10,44), (10,45))" id="40" type="(">(</Token>
+      <Token location="((10,45), (10,46))" id="182" type="TOKEN_INTEGER">0</Token>
+      <Token location="((10,46), (10,47))" id="41" type=")">)</Token>
+      <Token location="((10,47), (10,48))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((10,48), (10,58))" id="320" type="TOKEN_CONSTRAINT">CONSTRAINT</Token>
+      <Token location="((10,58), (10,59))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((10,59), (10,83))" id="173" type="TOKEN_ID">[DF_TimeEntries_Created]</Token>
+      <Token location="((10,83), (10,84))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((10,84), (10,91))" id="227" type="TOKEN_DEFAULT">DEFAULT</Token>
+      <Token location="((10,91), (10,92))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((10,92), (10,93))" id="40" type="(">(</Token>
+      <Token location="((10,93), (10,103))" id="173" type="TOKEN_ID">getutcdate</Token>
+      <Token location="((10,103), (10,104))" id="40" type="(">(</Token>
+      <Token location="((10,104), (10,105))" id="41" type=")">)</Token>
+      <Token location="((10,105), (10,106))" id="41" type=")">)</Token>
+      <Token location="((10,106), (10,107))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((10,107), (10,110))" id="137" type="TOKEN_NOT">NOT</Token>
+      <Token location="((10,110), (10,111))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((10,111), (10,115))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((10,115), (10,116))" id="44" type=",">,</Token>
+      <Token location="((10,116), (11,17))" id="943" type="LEX_WHITE">\r\n                </Token>
+      <Token location="((11,17), (11,26))" id="173" type="TOKEN_ID">[Updated]</Token>
+      <Token location="((11,26), (11,29))" id="943" type="LEX_WHITE">   </Token>
+      <Token location="((11,29), (11,43))" id="173" type="TOKEN_ID">DATETIMEOFFSET</Token>
+      <Token location="((11,43), (11,44))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((11,44), (11,45))" id="40" type="(">(</Token>
+      <Token location="((11,45), (11,46))" id="182" type="TOKEN_INTEGER">0</Token>
+      <Token location="((11,46), (11,47))" id="41" type=")">)</Token>
+      <Token location="((11,47), (11,48))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((11,48), (11,58))" id="320" type="TOKEN_CONSTRAINT">CONSTRAINT</Token>
+      <Token location="((11,58), (11,59))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((11,59), (11,83))" id="173" type="TOKEN_ID">[DF_TimeEntries_Updated]</Token>
+      <Token location="((11,83), (11,84))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((11,84), (11,91))" id="227" type="TOKEN_DEFAULT">DEFAULT</Token>
+      <Token location="((11,91), (11,92))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((11,92), (11,93))" id="40" type="(">(</Token>
+      <Token location="((11,93), (11,103))" id="173" type="TOKEN_ID">getutcdate</Token>
+      <Token location="((11,103), (11,104))" id="40" type="(">(</Token>
+      <Token location="((11,104), (11,105))" id="41" type=")">)</Token>
+      <Token location="((11,105), (11,106))" id="41" type=")">)</Token>
+      <Token location="((11,106), (11,107))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((11,107), (11,110))" id="137" type="TOKEN_NOT">NOT</Token>
+      <Token location="((11,110), (11,111))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((11,111), (11,115))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((11,115), (11,116))" id="44" type=",">,</Token>
+      <Token location="((11,116), (12,17))" id="943" type="LEX_WHITE">\r\n                </Token>
+      <Token location="((12,17), (12,27))" id="320" type="TOKEN_CONSTRAINT">CONSTRAINT</Token>
+      <Token location="((12,27), (12,28))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((12,28), (12,44))" id="173" type="TOKEN_ID">[PK_TimeEntries]</Token>
+      <Token location="((12,44), (12,45))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((12,45), (12,52))" id="321" type="TOKEN_PRIMARY">PRIMARY</Token>
+      <Token location="((12,52), (12,53))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((12,53), (12,56))" id="322" type="TOKEN_KEY">KEY</Token>
+      <Token location="((12,56), (12,57))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((12,57), (12,66))" id="214" type="TOKEN_CLUSTERED">CLUSTERED</Token>
+      <Token location="((12,66), (12,67))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((12,67), (12,68))" id="40" type="(">(</Token>
+      <Token location="((12,68), (12,72))" id="173" type="TOKEN_ID">[Id]</Token>
+      <Token location="((12,72), (12,73))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((12,73), (12,76))" id="205" type="TOKEN_ASC">ASC</Token>
+      <Token location="((12,76), (12,77))" id="41" type=")">)</Token>
+      <Token location="((12,77), (12,78))" id="44" type=",">,</Token>
+      <Token location="((12,78), (13,17))" id="943" type="LEX_WHITE">\r\n                </Token>
+      <Token location="((13,17), (13,27))" id="320" type="TOKEN_CONSTRAINT">CONSTRAINT</Token>
+      <Token location="((13,27), (13,28))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((13,28), (13,53))" id="173" type="TOKEN_ID">[FK_TimeEntries_Projects]</Token>
+      <Token location="((13,53), (13,54))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((13,54), (13,61))" id="326" type="TOKEN_FOREIGN">FOREIGN</Token>
+      <Token location="((13,61), (13,62))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((13,62), (13,65))" id="322" type="TOKEN_KEY">KEY</Token>
+      <Token location="((13,65), (13,66))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((13,66), (13,67))" id="40" type="(">(</Token>
+      <Token location="((13,67), (13,78))" id="173" type="TOKEN_ID">[ProjectId]</Token>
+      <Token location="((13,78), (13,79))" id="41" type=")">)</Token>
+      <Token location="((13,79), (13,80))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((13,80), (13,90))" id="323" type="TOKEN_REFERENCES">REFERENCES</Token>
+      <Token location="((13,90), (13,91))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((13,91), (13,96))" id="173" type="TOKEN_ID">[dbo]</Token>
+      <Token location="((13,96), (13,97))" id="46" type=".">.</Token>
+      <Token location="((13,97), (13,107))" id="173" type="TOKEN_ID">[Projects]</Token>
+      <Token location="((13,107), (13,108))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((13,108), (13,109))" id="40" type="(">(</Token>
+      <Token location="((13,109), (13,113))" id="173" type="TOKEN_ID">[Id]</Token>
+      <Token location="((13,113), (13,114))" id="41" type=")">)</Token>
+      <Token location="((13,114), (13,115))" id="44" type=",">,</Token>
+      <Token location="((13,115), (14,17))" id="943" type="LEX_WHITE">\r\n                </Token>
+      <Token location="((14,17), (14,27))" id="320" type="TOKEN_CONSTRAINT">CONSTRAINT</Token>
+      <Token location="((14,27), (14,28))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((14,28), (14,57))" id="173" type="TOKEN_ID">[FK_TimeEntries_ProjectTasks]</Token>
+      <Token location="((14,57), (14,58))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((14,58), (14,65))" id="326" type="TOKEN_FOREIGN">FOREIGN</Token>
+      <Token location="((14,65), (14,66))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((14,66), (14,69))" id="322" type="TOKEN_KEY">KEY</Token>
+      <Token location="((14,69), (14,70))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((14,70), (14,71))" id="40" type="(">(</Token>
+      <Token location="((14,71), (14,79))" id="173" type="TOKEN_ID">[TaskId]</Token>
+      <Token location="((14,79), (14,80))" id="41" type=")">)</Token>
+      <Token location="((14,80), (14,81))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((14,81), (14,91))" id="323" type="TOKEN_REFERENCES">REFERENCES</Token>
+      <Token location="((14,91), (14,92))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((14,92), (14,97))" id="173" type="TOKEN_ID">[dbo]</Token>
+      <Token location="((14,97), (14,98))" id="46" type=".">.</Token>
+      <Token location="((14,98), (14,112))" id="173" type="TOKEN_ID">[ProjectTasks]</Token>
+      <Token location="((14,112), (14,113))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((14,113), (14,114))" id="40" type="(">(</Token>
+      <Token location="((14,114), (14,118))" id="173" type="TOKEN_ID">[Id]</Token>
+      <Token location="((14,118), (14,119))" id="41" type=")">)</Token>
+      <Token location="((14,119), (14,120))" id="44" type=",">,</Token>
+      <Token location="((14,120), (15,17))" id="943" type="LEX_WHITE">\r\n                </Token>
+      <Token location="((15,17), (15,27))" id="320" type="TOKEN_CONSTRAINT">CONSTRAINT</Token>
+      <Token location="((15,27), (15,28))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((15,28), (15,61))" id="173" type="TOKEN_ID">[FK_TimeEntries_DrawingLogSheets]</Token>
+      <Token location="((15,61), (15,62))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((15,62), (15,69))" id="326" type="TOKEN_FOREIGN">FOREIGN</Token>
+      <Token location="((15,69), (15,70))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((15,70), (15,73))" id="322" type="TOKEN_KEY">KEY</Token>
+      <Token location="((15,73), (15,74))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((15,74), (15,75))" id="40" type="(">(</Token>
+      <Token location="((15,75), (15,84))" id="173" type="TOKEN_ID">[SheetId]</Token>
+      <Token location="((15,84), (15,85))" id="41" type=")">)</Token>
+      <Token location="((15,85), (15,86))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((15,86), (15,96))" id="323" type="TOKEN_REFERENCES">REFERENCES</Token>
+      <Token location="((15,96), (15,97))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((15,97), (15,102))" id="173" type="TOKEN_ID">[dbo]</Token>
+      <Token location="((15,102), (15,103))" id="46" type=".">.</Token>
+      <Token location="((15,103), (15,121))" id="173" type="TOKEN_ID">[DrawingLogSheets]</Token>
+      <Token location="((15,121), (15,122))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((15,122), (15,123))" id="40" type="(">(</Token>
+      <Token location="((15,123), (15,127))" id="173" type="TOKEN_ID">[Id]</Token>
+      <Token location="((15,127), (15,128))" id="41" type=")">)</Token>
+      <Token location="((15,128), (15,129))" id="44" type=",">,</Token>
+      <Token location="((15,129), (16,17))" id="943" type="LEX_WHITE">\r\n                </Token>
+      <Token location="((16,17), (16,27))" id="320" type="TOKEN_CONSTRAINT">CONSTRAINT</Token>
+      <Token location="((16,27), (16,28))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((16,28), (16,68))" id="173" type="TOKEN_ID">[UQ_TimeEntries_TaskId_Email_Date_Sheet]</Token>
+      <Token location="((16,68), (16,69))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((16,69), (16,75))" id="301" type="TOKEN_UNIQUE">UNIQUE</Token>
+      <Token location="((16,75), (16,76))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((16,76), (16,88))" id="265" type="TOKEN_NONCLUSTERED">NONCLUSTERED</Token>
+      <Token location="((16,88), (16,89))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((16,89), (16,90))" id="40" type="(">(</Token>
+      <Token location="((16,90), (16,98))" id="173" type="TOKEN_ID">[TaskId]</Token>
+      <Token location="((16,98), (16,99))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((16,99), (16,102))" id="205" type="TOKEN_ASC">ASC</Token>
+      <Token location="((16,102), (16,103))" id="44" type=",">,</Token>
+      <Token location="((16,103), (16,104))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((16,104), (16,111))" id="173" type="TOKEN_ID">[Email]</Token>
+      <Token location="((16,111), (16,112))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((16,112), (16,115))" id="205" type="TOKEN_ASC">ASC</Token>
+      <Token location="((16,115), (16,116))" id="44" type=",">,</Token>
+      <Token location="((16,116), (16,117))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((16,117), (16,123))" id="173" type="TOKEN_ID">[Date]</Token>
+      <Token location="((16,123), (16,124))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((16,124), (16,127))" id="205" type="TOKEN_ASC">ASC</Token>
+      <Token location="((16,127), (16,128))" id="44" type=",">,</Token>
+      <Token location="((16,128), (16,129))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((16,129), (16,138))" id="173" type="TOKEN_ID">[SheetId]</Token>
+      <Token location="((16,138), (16,139))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((16,139), (16,142))" id="205" type="TOKEN_ASC">ASC</Token>
+      <Token location="((16,142), (16,143))" id="41" type=")">)</Token>
+      <Token location="((16,143), (17,17))" id="943" type="LEX_WHITE">\r\n                </Token>
+      <Token location="((17,17), (17,18))" id="41" type=")">)</Token>
+      <Token location="((17,18), (17,19))" id="59" type=";">;</Token>
+    </Tokens>
+  </SqlBatch>
+</SqlScript>

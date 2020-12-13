@@ -1,0 +1,372 @@
+<SqlScript Location="((1,1), (11,19))">
+  <!--CREATE TABLE [dbo].[DrawingLog] ( 
+                    [ProjectId]                       UNIQUEIDENTIFIER NOT NULL,
+                    [DurationForQAQC] INT NOT NULL , 
+                    [DurationToReviseQAQCComments] INT NOT NULL , 
+                    [DurationForGCToReview] INT NOT NULL , 
+                    [DurationToReviseCommentsFromGC] INT NOT NULL , 
+                    [WorkOnSaturdays] BIT NOT NULL , 
+                    [Holidays] VARCHAR(MAX) NOT NULL DEFAULT '[]', 
+                    CONSTRAINT [PK_DrawingLog] PRIMARY KEY CLUSTERED ([ProjectId]),
+                    CONSTRAINT [FK_DrawingLog_Projects] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Projects] ([Id])
+                );-->
+  <Errors />
+  <SqlBatch Location="((1,1), (11,19))">
+    <!--CREATE TABLE [dbo].[DrawingLog] ( 
+                    [ProjectId]                       UNIQUEIDENTIFIER NOT NULL,
+                    [DurationForQAQC] INT NOT NULL , 
+                    [DurationToReviseQAQCComments] INT NOT NULL , 
+                    [DurationForGCToReview] INT NOT NULL , 
+                    [DurationToReviseCommentsFromGC] INT NOT NULL , 
+                    [WorkOnSaturdays] BIT NOT NULL , 
+                    [Holidays] VARCHAR(MAX) NOT NULL DEFAULT '[]', 
+                    CONSTRAINT [PK_DrawingLog] PRIMARY KEY CLUSTERED ([ProjectId]),
+                    CONSTRAINT [FK_DrawingLog_Projects] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Projects] ([Id])
+                );-->
+    <SqlCreateTableStatement Location="((1,1),(11,18))" Name="dbo.DrawingLog">
+      <!--CREATE TABLE [dbo].[DrawingLog] ( 
+                    [ProjectId]                       UNIQUEIDENTIFIER NOT NULL,
+                    [DurationForQAQC] INT NOT NULL , 
+                    [DurationToReviseQAQCComments] INT NOT NULL , 
+                    [DurationForGCToReview] INT NOT NULL , 
+                    [DurationToReviseCommentsFromGC] INT NOT NULL , 
+                    [WorkOnSaturdays] BIT NOT NULL , 
+                    [Holidays] VARCHAR(MAX) NOT NULL DEFAULT '[]', 
+                    CONSTRAINT [PK_DrawingLog] PRIMARY KEY CLUSTERED ([ProjectId]),
+                    CONSTRAINT [FK_DrawingLog_Projects] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Projects] ([Id])
+                )-->
+      <SqlObjectIdentifier Location="((1,14),(1,32))" SchemaName="dbo" ObjectName="DrawingLog">
+        <!--[dbo].[DrawingLog]-->
+        <SqlIdentifier Location="((1,14),(1,19))" Value="dbo">
+          <!--[dbo]-->
+        </SqlIdentifier>
+        <SqlIdentifier Location="((1,20),(1,32))" Value="DrawingLog">
+          <!--[DrawingLog]-->
+        </SqlIdentifier>
+      </SqlObjectIdentifier>
+      <SqlTableDefinition Location="((2,21),(10,117))">
+        <!--[ProjectId]                       UNIQUEIDENTIFIER NOT NULL,
+                    [DurationForQAQC] INT NOT NULL , 
+                    [DurationToReviseQAQCComments] INT NOT NULL , 
+                    [DurationForGCToReview] INT NOT NULL , 
+                    [DurationToReviseCommentsFromGC] INT NOT NULL , 
+                    [WorkOnSaturdays] BIT NOT NULL , 
+                    [Holidays] VARCHAR(MAX) NOT NULL DEFAULT '[]', 
+                    CONSTRAINT [PK_DrawingLog] PRIMARY KEY CLUSTERED ([ProjectId]),
+                    CONSTRAINT [FK_DrawingLog_Projects] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Projects] ([Id])-->
+        <SqlColumnDefinition Location="((2,21),(2,80))" Name="ProjectId" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[ProjectId]                       UNIQUEIDENTIFIER NOT NULL-->
+          <SqlIdentifier Location="((2,21),(2,32))" Value="ProjectId">
+            <!--[ProjectId]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((2,55),(2,71))" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--UNIQUEIDENTIFIER-->
+            <SqlDataType Location="((2,55),(2,71))" ObjectIdentifier="UNIQUEIDENTIFIER" National="False" Varying="False">
+              <!--UNIQUEIDENTIFIER-->
+              <SqlObjectIdentifier Location="((2,55),(2,71))" ObjectName="UNIQUEIDENTIFIER">
+                <!--UNIQUEIDENTIFIER-->
+                <SqlIdentifier Location="((2,55),(2,71))" Value="UNIQUEIDENTIFIER">
+                  <!--UNIQUEIDENTIFIER-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlConstraint Location="((2,72),(2,80))" Type="NotNull">
+            <!--NOT NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+        <SqlColumnDefinition Location="((3,21),(3,51))" Name="DurationForQAQC" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[DurationForQAQC] INT NOT NULL-->
+          <SqlIdentifier Location="((3,21),(3,38))" Value="DurationForQAQC">
+            <!--[DurationForQAQC]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((3,39),(3,42))" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--INT-->
+            <SqlDataType Location="((3,39),(3,42))" ObjectIdentifier="INT" National="False" Varying="False">
+              <!--INT-->
+              <SqlObjectIdentifier Location="((3,39),(3,42))" ObjectName="INT">
+                <!--INT-->
+                <SqlIdentifier Location="((3,39),(3,42))" Value="INT">
+                  <!--INT-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlConstraint Location="((3,43),(3,51))" Type="NotNull">
+            <!--NOT NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+        <SqlColumnDefinition Location="((4,21),(4,64))" Name="DurationToReviseQAQCComments" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[DurationToReviseQAQCComments] INT NOT NULL-->
+          <SqlIdentifier Location="((4,21),(4,51))" Value="DurationToReviseQAQCComments">
+            <!--[DurationToReviseQAQCComments]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((4,52),(4,55))" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--INT-->
+            <SqlDataType Location="((4,52),(4,55))" ObjectIdentifier="INT" National="False" Varying="False">
+              <!--INT-->
+              <SqlObjectIdentifier Location="((4,52),(4,55))" ObjectName="INT">
+                <!--INT-->
+                <SqlIdentifier Location="((4,52),(4,55))" Value="INT">
+                  <!--INT-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlConstraint Location="((4,56),(4,64))" Type="NotNull">
+            <!--NOT NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+        <SqlColumnDefinition Location="((5,21),(5,57))" Name="DurationForGCToReview" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[DurationForGCToReview] INT NOT NULL-->
+          <SqlIdentifier Location="((5,21),(5,44))" Value="DurationForGCToReview">
+            <!--[DurationForGCToReview]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((5,45),(5,48))" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--INT-->
+            <SqlDataType Location="((5,45),(5,48))" ObjectIdentifier="INT" National="False" Varying="False">
+              <!--INT-->
+              <SqlObjectIdentifier Location="((5,45),(5,48))" ObjectName="INT">
+                <!--INT-->
+                <SqlIdentifier Location="((5,45),(5,48))" Value="INT">
+                  <!--INT-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlConstraint Location="((5,49),(5,57))" Type="NotNull">
+            <!--NOT NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+        <SqlColumnDefinition Location="((6,21),(6,66))" Name="DurationToReviseCommentsFromGC" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[DurationToReviseCommentsFromGC] INT NOT NULL-->
+          <SqlIdentifier Location="((6,21),(6,53))" Value="DurationToReviseCommentsFromGC">
+            <!--[DurationToReviseCommentsFromGC]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((6,54),(6,57))" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--INT-->
+            <SqlDataType Location="((6,54),(6,57))" ObjectIdentifier="INT" National="False" Varying="False">
+              <!--INT-->
+              <SqlObjectIdentifier Location="((6,54),(6,57))" ObjectName="INT">
+                <!--INT-->
+                <SqlIdentifier Location="((6,54),(6,57))" Value="INT">
+                  <!--INT-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlConstraint Location="((6,58),(6,66))" Type="NotNull">
+            <!--NOT NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+        <SqlColumnDefinition Location="((7,21),(7,51))" Name="WorkOnSaturdays" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[WorkOnSaturdays] BIT NOT NULL-->
+          <SqlIdentifier Location="((7,21),(7,38))" Value="WorkOnSaturdays">
+            <!--[WorkOnSaturdays]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((7,39),(7,42))" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--BIT-->
+            <SqlDataType Location="((7,39),(7,42))" ObjectIdentifier="BIT" National="False" Varying="False">
+              <!--BIT-->
+              <SqlObjectIdentifier Location="((7,39),(7,42))" ObjectName="BIT">
+                <!--BIT-->
+                <SqlIdentifier Location="((7,39),(7,42))" Value="BIT">
+                  <!--BIT-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlConstraint Location="((7,43),(7,51))" Type="NotNull">
+            <!--NOT NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+        <SqlColumnDefinition Location="((8,21),(8,66))" Name="Holidays" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[Holidays] VARCHAR(MAX) NOT NULL DEFAULT '[]'-->
+          <SqlIdentifier Location="((8,21),(8,31))" Value="Holidays">
+            <!--[Holidays]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((8,32),(8,44))" IsMaximum="True" IsCursor="False" XmlDocumentConstraint="None">
+            <!--VARCHAR(MAX)-->
+            <SqlDataType Location="((8,32),(8,39))" ObjectIdentifier="VARCHAR" National="False" Varying="False">
+              <!--VARCHAR-->
+              <SqlObjectIdentifier Location="((8,32),(8,39))" ObjectName="VARCHAR">
+                <!--VARCHAR-->
+                <SqlIdentifier Location="((8,32),(8,39))" Value="VARCHAR">
+                  <!--VARCHAR-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlConstraint Location="((8,45),(8,53))" Type="NotNull">
+            <!--NOT NULL-->
+          </SqlConstraint>
+          <SqlDefaultConstraint Location="((8,54),(8,66))" Type="Default">
+            <!--DEFAULT '[]'-->
+            <SqlLiteralExpression Location="((8,62),(8,66))" Value="[]" Type="String">
+              <!--'[]'-->
+            </SqlLiteralExpression>
+          </SqlDefaultConstraint>
+        </SqlColumnDefinition>
+        <SqlPrimaryKeyConstraint Location="((9,21),(9,83))" ClusterOption="Clustered" Name="PK_DrawingLog" Type="PrimaryKey">
+          <!--CONSTRAINT [PK_DrawingLog] PRIMARY KEY CLUSTERED ([ProjectId])-->
+          <SqlIdentifier Location="((9,32),(9,47))" Value="PK_DrawingLog">
+            <!--[PK_DrawingLog]-->
+          </SqlIdentifier>
+          <SqlIndexedColumn Location="((9,71),(9,82))" Name="ProjectId" SortOrder="None">
+            <!--[ProjectId]-->
+            <SqlIdentifier Location="((9,71),(9,82))" Value="ProjectId">
+              <!--[ProjectId]-->
+            </SqlIdentifier>
+          </SqlIndexedColumn>
+        </SqlPrimaryKeyConstraint>
+        <SqlForeignKeyConstraint Location="((10,21),(10,117))" ReferencedTable="dbo.Projects" DeleteAction="None" UpdateAction="None" NotForReplication="False" Name="FK_DrawingLog_Projects" Type="ForeignKey">
+          <!--CONSTRAINT [FK_DrawingLog_Projects] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Projects] ([Id])-->
+          <SqlIdentifier Location="((10,32),(10,56))" Value="FK_DrawingLog_Projects">
+            <!--[FK_DrawingLog_Projects]-->
+          </SqlIdentifier>
+          <SqlIdentifier Location="((10,70),(10,81))" Value="ProjectId">
+            <!--[ProjectId]-->
+          </SqlIdentifier>
+          <SqlObjectIdentifier Location="((10,94),(10,110))" SchemaName="dbo" ObjectName="Projects">
+            <!--[dbo].[Projects]-->
+            <SqlIdentifier Location="((10,94),(10,99))" Value="dbo">
+              <!--[dbo]-->
+            </SqlIdentifier>
+            <SqlIdentifier Location="((10,100),(10,110))" Value="Projects">
+              <!--[Projects]-->
+            </SqlIdentifier>
+          </SqlObjectIdentifier>
+          <SqlIdentifier Location="((10,112),(10,116))" Value="Id">
+            <!--[Id]-->
+          </SqlIdentifier>
+        </SqlForeignKeyConstraint>
+      </SqlTableDefinition>
+    </SqlCreateTableStatement>
+    <Tokens>
+      <Token location="((1,1), (1,7))" id="145" type="TOKEN_CREATE">CREATE</Token>
+      <Token location="((1,7), (1,8))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((1,8), (1,13))" id="293" type="TOKEN_TABLE">TABLE</Token>
+      <Token location="((1,13), (1,14))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((1,14), (1,19))" id="173" type="TOKEN_ID">[dbo]</Token>
+      <Token location="((1,19), (1,20))" id="46" type=".">.</Token>
+      <Token location="((1,20), (1,32))" id="173" type="TOKEN_ID">[DrawingLog]</Token>
+      <Token location="((1,32), (1,33))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((1,33), (1,34))" id="40" type="(">(</Token>
+      <Token location="((1,34), (2,21))" id="943" type="LEX_WHITE"> \r\n                    </Token>
+      <Token location="((2,21), (2,32))" id="173" type="TOKEN_ID">[ProjectId]</Token>
+      <Token location="((2,32), (2,55))" id="943" type="LEX_WHITE">                       </Token>
+      <Token location="((2,55), (2,71))" id="173" type="TOKEN_ID">UNIQUEIDENTIFIER</Token>
+      <Token location="((2,71), (2,72))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((2,72), (2,75))" id="137" type="TOKEN_NOT">NOT</Token>
+      <Token location="((2,75), (2,76))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((2,76), (2,80))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((2,80), (2,81))" id="44" type=",">,</Token>
+      <Token location="((2,81), (3,21))" id="943" type="LEX_WHITE">\r\n                    </Token>
+      <Token location="((3,21), (3,38))" id="173" type="TOKEN_ID">[DurationForQAQC]</Token>
+      <Token location="((3,38), (3,39))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((3,39), (3,42))" id="173" type="TOKEN_ID">INT</Token>
+      <Token location="((3,42), (3,43))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((3,43), (3,46))" id="137" type="TOKEN_NOT">NOT</Token>
+      <Token location="((3,46), (3,47))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((3,47), (3,51))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((3,51), (3,52))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((3,52), (3,53))" id="44" type=",">,</Token>
+      <Token location="((3,53), (4,21))" id="943" type="LEX_WHITE"> \r\n                    </Token>
+      <Token location="((4,21), (4,51))" id="173" type="TOKEN_ID">[DurationToReviseQAQCComments]</Token>
+      <Token location="((4,51), (4,52))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((4,52), (4,55))" id="173" type="TOKEN_ID">INT</Token>
+      <Token location="((4,55), (4,56))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((4,56), (4,59))" id="137" type="TOKEN_NOT">NOT</Token>
+      <Token location="((4,59), (4,60))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((4,60), (4,64))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((4,64), (4,65))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((4,65), (4,66))" id="44" type=",">,</Token>
+      <Token location="((4,66), (5,21))" id="943" type="LEX_WHITE"> \r\n                    </Token>
+      <Token location="((5,21), (5,44))" id="173" type="TOKEN_ID">[DurationForGCToReview]</Token>
+      <Token location="((5,44), (5,45))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((5,45), (5,48))" id="173" type="TOKEN_ID">INT</Token>
+      <Token location="((5,48), (5,49))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((5,49), (5,52))" id="137" type="TOKEN_NOT">NOT</Token>
+      <Token location="((5,52), (5,53))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((5,53), (5,57))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((5,57), (5,58))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((5,58), (5,59))" id="44" type=",">,</Token>
+      <Token location="((5,59), (6,21))" id="943" type="LEX_WHITE"> \r\n                    </Token>
+      <Token location="((6,21), (6,53))" id="173" type="TOKEN_ID">[DurationToReviseCommentsFromGC]</Token>
+      <Token location="((6,53), (6,54))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((6,54), (6,57))" id="173" type="TOKEN_ID">INT</Token>
+      <Token location="((6,57), (6,58))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((6,58), (6,61))" id="137" type="TOKEN_NOT">NOT</Token>
+      <Token location="((6,61), (6,62))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((6,62), (6,66))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((6,66), (6,67))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((6,67), (6,68))" id="44" type=",">,</Token>
+      <Token location="((6,68), (7,21))" id="943" type="LEX_WHITE"> \r\n                    </Token>
+      <Token location="((7,21), (7,38))" id="173" type="TOKEN_ID">[WorkOnSaturdays]</Token>
+      <Token location="((7,38), (7,39))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((7,39), (7,42))" id="173" type="TOKEN_ID">BIT</Token>
+      <Token location="((7,42), (7,43))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((7,43), (7,46))" id="137" type="TOKEN_NOT">NOT</Token>
+      <Token location="((7,46), (7,47))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((7,47), (7,51))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((7,51), (7,52))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((7,52), (7,53))" id="44" type=",">,</Token>
+      <Token location="((7,53), (8,21))" id="943" type="LEX_WHITE"> \r\n                    </Token>
+      <Token location="((8,21), (8,31))" id="173" type="TOKEN_ID">[Holidays]</Token>
+      <Token location="((8,31), (8,32))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((8,32), (8,39))" id="173" type="TOKEN_ID">VARCHAR</Token>
+      <Token location="((8,39), (8,40))" id="40" type="(">(</Token>
+      <Token location="((8,40), (8,43))" id="173" type="TOKEN_ID">MAX</Token>
+      <Token location="((8,43), (8,44))" id="41" type=")">)</Token>
+      <Token location="((8,44), (8,45))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((8,45), (8,48))" id="137" type="TOKEN_NOT">NOT</Token>
+      <Token location="((8,48), (8,49))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((8,49), (8,53))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((8,53), (8,54))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((8,54), (8,61))" id="227" type="TOKEN_DEFAULT">DEFAULT</Token>
+      <Token location="((8,61), (8,62))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((8,62), (8,66))" id="176" type="TOKEN_STRING">'[]'</Token>
+      <Token location="((8,66), (8,67))" id="44" type=",">,</Token>
+      <Token location="((8,67), (9,21))" id="943" type="LEX_WHITE"> \r\n                    </Token>
+      <Token location="((9,21), (9,31))" id="320" type="TOKEN_CONSTRAINT">CONSTRAINT</Token>
+      <Token location="((9,31), (9,32))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((9,32), (9,47))" id="173" type="TOKEN_ID">[PK_DrawingLog]</Token>
+      <Token location="((9,47), (9,48))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((9,48), (9,55))" id="321" type="TOKEN_PRIMARY">PRIMARY</Token>
+      <Token location="((9,55), (9,56))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((9,56), (9,59))" id="322" type="TOKEN_KEY">KEY</Token>
+      <Token location="((9,59), (9,60))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((9,60), (9,69))" id="214" type="TOKEN_CLUSTERED">CLUSTERED</Token>
+      <Token location="((9,69), (9,70))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((9,70), (9,71))" id="40" type="(">(</Token>
+      <Token location="((9,71), (9,82))" id="173" type="TOKEN_ID">[ProjectId]</Token>
+      <Token location="((9,82), (9,83))" id="41" type=")">)</Token>
+      <Token location="((9,83), (9,84))" id="44" type=",">,</Token>
+      <Token location="((9,84), (10,21))" id="943" type="LEX_WHITE">\r\n                    </Token>
+      <Token location="((10,21), (10,31))" id="320" type="TOKEN_CONSTRAINT">CONSTRAINT</Token>
+      <Token location="((10,31), (10,32))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((10,32), (10,56))" id="173" type="TOKEN_ID">[FK_DrawingLog_Projects]</Token>
+      <Token location="((10,56), (10,57))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((10,57), (10,64))" id="326" type="TOKEN_FOREIGN">FOREIGN</Token>
+      <Token location="((10,64), (10,65))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((10,65), (10,68))" id="322" type="TOKEN_KEY">KEY</Token>
+      <Token location="((10,68), (10,69))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((10,69), (10,70))" id="40" type="(">(</Token>
+      <Token location="((10,70), (10,81))" id="173" type="TOKEN_ID">[ProjectId]</Token>
+      <Token location="((10,81), (10,82))" id="41" type=")">)</Token>
+      <Token location="((10,82), (10,83))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((10,83), (10,93))" id="323" type="TOKEN_REFERENCES">REFERENCES</Token>
+      <Token location="((10,93), (10,94))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((10,94), (10,99))" id="173" type="TOKEN_ID">[dbo]</Token>
+      <Token location="((10,99), (10,100))" id="46" type=".">.</Token>
+      <Token location="((10,100), (10,110))" id="173" type="TOKEN_ID">[Projects]</Token>
+      <Token location="((10,110), (10,111))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((10,111), (10,112))" id="40" type="(">(</Token>
+      <Token location="((10,112), (10,116))" id="173" type="TOKEN_ID">[Id]</Token>
+      <Token location="((10,116), (10,117))" id="41" type=")">)</Token>
+      <Token location="((10,117), (11,17))" id="943" type="LEX_WHITE">\r\n                </Token>
+      <Token location="((11,17), (11,18))" id="41" type=")">)</Token>
+      <Token location="((11,18), (11,19))" id="59" type=";">;</Token>
+    </Tokens>
+  </SqlBatch>
+</SqlScript>

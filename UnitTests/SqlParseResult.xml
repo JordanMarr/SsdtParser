@@ -1,0 +1,223 @@
+<SqlScript Location="((1,1), (7,19))">
+  <!--CREATE TABLE [dbo].[DrawingLogHistory] (
+                    [SheetId]           UNIQUEIDENTIFIER   NOT NULL,
+                    [SheetNumber]       VARCHAR (40)       NOT NULL,
+                    [ChangeDescription] VARCHAR (200)      NOT NULL,
+                    [Changed]           DATETIMEOFFSET (7) NOT NULL,
+                    [Username]          VARCHAR (100)      NOT NULL
+                );-->
+  <Errors />
+  <SqlBatch Location="((1,1), (7,19))">
+    <!--CREATE TABLE [dbo].[DrawingLogHistory] (
+                    [SheetId]           UNIQUEIDENTIFIER   NOT NULL,
+                    [SheetNumber]       VARCHAR (40)       NOT NULL,
+                    [ChangeDescription] VARCHAR (200)      NOT NULL,
+                    [Changed]           DATETIMEOFFSET (7) NOT NULL,
+                    [Username]          VARCHAR (100)      NOT NULL
+                );-->
+    <SqlCreateTableStatement Location="((1,1),(7,18))" Name="dbo.DrawingLogHistory">
+      <!--CREATE TABLE [dbo].[DrawingLogHistory] (
+                    [SheetId]           UNIQUEIDENTIFIER   NOT NULL,
+                    [SheetNumber]       VARCHAR (40)       NOT NULL,
+                    [ChangeDescription] VARCHAR (200)      NOT NULL,
+                    [Changed]           DATETIMEOFFSET (7) NOT NULL,
+                    [Username]          VARCHAR (100)      NOT NULL
+                )-->
+      <SqlObjectIdentifier Location="((1,14),(1,39))" SchemaName="dbo" ObjectName="DrawingLogHistory">
+        <!--[dbo].[DrawingLogHistory]-->
+        <SqlIdentifier Location="((1,14),(1,19))" Value="dbo">
+          <!--[dbo]-->
+        </SqlIdentifier>
+        <SqlIdentifier Location="((1,20),(1,39))" Value="DrawingLogHistory">
+          <!--[DrawingLogHistory]-->
+        </SqlIdentifier>
+      </SqlObjectIdentifier>
+      <SqlTableDefinition Location="((2,21),(6,68))">
+        <!--[SheetId]           UNIQUEIDENTIFIER   NOT NULL,
+                    [SheetNumber]       VARCHAR (40)       NOT NULL,
+                    [ChangeDescription] VARCHAR (200)      NOT NULL,
+                    [Changed]           DATETIMEOFFSET (7) NOT NULL,
+                    [Username]          VARCHAR (100)      NOT NULL-->
+        <SqlColumnDefinition Location="((2,21),(2,68))" Name="SheetId" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[SheetId]           UNIQUEIDENTIFIER   NOT NULL-->
+          <SqlIdentifier Location="((2,21),(2,30))" Value="SheetId">
+            <!--[SheetId]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((2,41),(2,57))" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--UNIQUEIDENTIFIER-->
+            <SqlDataType Location="((2,41),(2,57))" ObjectIdentifier="UNIQUEIDENTIFIER" National="False" Varying="False">
+              <!--UNIQUEIDENTIFIER-->
+              <SqlObjectIdentifier Location="((2,41),(2,57))" ObjectName="UNIQUEIDENTIFIER">
+                <!--UNIQUEIDENTIFIER-->
+                <SqlIdentifier Location="((2,41),(2,57))" Value="UNIQUEIDENTIFIER">
+                  <!--UNIQUEIDENTIFIER-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlConstraint Location="((2,60),(2,68))" Type="NotNull">
+            <!--NOT NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+        <SqlColumnDefinition Location="((3,21),(3,68))" Name="SheetNumber" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[SheetNumber]       VARCHAR (40)       NOT NULL-->
+          <SqlIdentifier Location="((3,21),(3,34))" Value="SheetNumber">
+            <!--[SheetNumber]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((3,41),(3,53))" Argument1="40" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--VARCHAR (40)-->
+            <SqlDataType Location="((3,41),(3,48))" ObjectIdentifier="VARCHAR" National="False" Varying="False">
+              <!--VARCHAR-->
+              <SqlObjectIdentifier Location="((3,41),(3,48))" ObjectName="VARCHAR">
+                <!--VARCHAR-->
+                <SqlIdentifier Location="((3,41),(3,48))" Value="VARCHAR">
+                  <!--VARCHAR-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlConstraint Location="((3,60),(3,68))" Type="NotNull">
+            <!--NOT NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+        <SqlColumnDefinition Location="((4,21),(4,68))" Name="ChangeDescription" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[ChangeDescription] VARCHAR (200)      NOT NULL-->
+          <SqlIdentifier Location="((4,21),(4,40))" Value="ChangeDescription">
+            <!--[ChangeDescription]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((4,41),(4,54))" Argument1="200" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--VARCHAR (200)-->
+            <SqlDataType Location="((4,41),(4,48))" ObjectIdentifier="VARCHAR" National="False" Varying="False">
+              <!--VARCHAR-->
+              <SqlObjectIdentifier Location="((4,41),(4,48))" ObjectName="VARCHAR">
+                <!--VARCHAR-->
+                <SqlIdentifier Location="((4,41),(4,48))" Value="VARCHAR">
+                  <!--VARCHAR-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlConstraint Location="((4,60),(4,68))" Type="NotNull">
+            <!--NOT NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+        <SqlColumnDefinition Location="((5,21),(5,68))" Name="Changed" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[Changed]           DATETIMEOFFSET (7) NOT NULL-->
+          <SqlIdentifier Location="((5,21),(5,30))" Value="Changed">
+            <!--[Changed]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((5,41),(5,59))" Argument1="7" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--DATETIMEOFFSET (7)-->
+            <SqlDataType Location="((5,41),(5,55))" ObjectIdentifier="DATETIMEOFFSET" National="False" Varying="False">
+              <!--DATETIMEOFFSET-->
+              <SqlObjectIdentifier Location="((5,41),(5,55))" ObjectName="DATETIMEOFFSET">
+                <!--DATETIMEOFFSET-->
+                <SqlIdentifier Location="((5,41),(5,55))" Value="DATETIMEOFFSET">
+                  <!--DATETIMEOFFSET-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlConstraint Location="((5,60),(5,68))" Type="NotNull">
+            <!--NOT NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+        <SqlColumnDefinition Location="((6,21),(6,68))" Name="Username" SparseOption="None" GeneratedAlwaysType="None">
+          <!--[Username]          VARCHAR (100)      NOT NULL-->
+          <SqlIdentifier Location="((6,21),(6,31))" Value="Username">
+            <!--[Username]-->
+          </SqlIdentifier>
+          <SqlDataTypeSpecification Location="((6,41),(6,54))" Argument1="100" IsMaximum="False" IsCursor="False" XmlDocumentConstraint="None">
+            <!--VARCHAR (100)-->
+            <SqlDataType Location="((6,41),(6,48))" ObjectIdentifier="VARCHAR" National="False" Varying="False">
+              <!--VARCHAR-->
+              <SqlObjectIdentifier Location="((6,41),(6,48))" ObjectName="VARCHAR">
+                <!--VARCHAR-->
+                <SqlIdentifier Location="((6,41),(6,48))" Value="VARCHAR">
+                  <!--VARCHAR-->
+                </SqlIdentifier>
+              </SqlObjectIdentifier>
+            </SqlDataType>
+          </SqlDataTypeSpecification>
+          <SqlConstraint Location="((6,60),(6,68))" Type="NotNull">
+            <!--NOT NULL-->
+          </SqlConstraint>
+        </SqlColumnDefinition>
+      </SqlTableDefinition>
+    </SqlCreateTableStatement>
+    <Tokens>
+      <Token location="((1,1), (1,7))" id="145" type="TOKEN_CREATE">CREATE</Token>
+      <Token location="((1,7), (1,8))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((1,8), (1,13))" id="293" type="TOKEN_TABLE">TABLE</Token>
+      <Token location="((1,13), (1,14))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((1,14), (1,19))" id="173" type="TOKEN_ID">[dbo]</Token>
+      <Token location="((1,19), (1,20))" id="46" type=".">.</Token>
+      <Token location="((1,20), (1,39))" id="173" type="TOKEN_ID">[DrawingLogHistory]</Token>
+      <Token location="((1,39), (1,40))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((1,40), (1,41))" id="40" type="(">(</Token>
+      <Token location="((1,41), (2,21))" id="943" type="LEX_WHITE">\r\n                    </Token>
+      <Token location="((2,21), (2,30))" id="173" type="TOKEN_ID">[SheetId]</Token>
+      <Token location="((2,30), (2,41))" id="943" type="LEX_WHITE">           </Token>
+      <Token location="((2,41), (2,57))" id="173" type="TOKEN_ID">UNIQUEIDENTIFIER</Token>
+      <Token location="((2,57), (2,60))" id="943" type="LEX_WHITE">   </Token>
+      <Token location="((2,60), (2,63))" id="137" type="TOKEN_NOT">NOT</Token>
+      <Token location="((2,63), (2,64))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((2,64), (2,68))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((2,68), (2,69))" id="44" type=",">,</Token>
+      <Token location="((2,69), (3,21))" id="943" type="LEX_WHITE">\r\n                    </Token>
+      <Token location="((3,21), (3,34))" id="173" type="TOKEN_ID">[SheetNumber]</Token>
+      <Token location="((3,34), (3,41))" id="943" type="LEX_WHITE">       </Token>
+      <Token location="((3,41), (3,48))" id="173" type="TOKEN_ID">VARCHAR</Token>
+      <Token location="((3,48), (3,49))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((3,49), (3,50))" id="40" type="(">(</Token>
+      <Token location="((3,50), (3,52))" id="182" type="TOKEN_INTEGER">40</Token>
+      <Token location="((3,52), (3,53))" id="41" type=")">)</Token>
+      <Token location="((3,53), (3,60))" id="943" type="LEX_WHITE">       </Token>
+      <Token location="((3,60), (3,63))" id="137" type="TOKEN_NOT">NOT</Token>
+      <Token location="((3,63), (3,64))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((3,64), (3,68))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((3,68), (3,69))" id="44" type=",">,</Token>
+      <Token location="((3,69), (4,21))" id="943" type="LEX_WHITE">\r\n                    </Token>
+      <Token location="((4,21), (4,40))" id="173" type="TOKEN_ID">[ChangeDescription]</Token>
+      <Token location="((4,40), (4,41))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((4,41), (4,48))" id="173" type="TOKEN_ID">VARCHAR</Token>
+      <Token location="((4,48), (4,49))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((4,49), (4,50))" id="40" type="(">(</Token>
+      <Token location="((4,50), (4,53))" id="182" type="TOKEN_INTEGER">200</Token>
+      <Token location="((4,53), (4,54))" id="41" type=")">)</Token>
+      <Token location="((4,54), (4,60))" id="943" type="LEX_WHITE">      </Token>
+      <Token location="((4,60), (4,63))" id="137" type="TOKEN_NOT">NOT</Token>
+      <Token location="((4,63), (4,64))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((4,64), (4,68))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((4,68), (4,69))" id="44" type=",">,</Token>
+      <Token location="((4,69), (5,21))" id="943" type="LEX_WHITE">\r\n                    </Token>
+      <Token location="((5,21), (5,30))" id="173" type="TOKEN_ID">[Changed]</Token>
+      <Token location="((5,30), (5,41))" id="943" type="LEX_WHITE">           </Token>
+      <Token location="((5,41), (5,55))" id="173" type="TOKEN_ID">DATETIMEOFFSET</Token>
+      <Token location="((5,55), (5,56))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((5,56), (5,57))" id="40" type="(">(</Token>
+      <Token location="((5,57), (5,58))" id="182" type="TOKEN_INTEGER">7</Token>
+      <Token location="((5,58), (5,59))" id="41" type=")">)</Token>
+      <Token location="((5,59), (5,60))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((5,60), (5,63))" id="137" type="TOKEN_NOT">NOT</Token>
+      <Token location="((5,63), (5,64))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((5,64), (5,68))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((5,68), (5,69))" id="44" type=",">,</Token>
+      <Token location="((5,69), (6,21))" id="943" type="LEX_WHITE">\r\n                    </Token>
+      <Token location="((6,21), (6,31))" id="173" type="TOKEN_ID">[Username]</Token>
+      <Token location="((6,31), (6,41))" id="943" type="LEX_WHITE">          </Token>
+      <Token location="((6,41), (6,48))" id="173" type="TOKEN_ID">VARCHAR</Token>
+      <Token location="((6,48), (6,49))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((6,49), (6,50))" id="40" type="(">(</Token>
+      <Token location="((6,50), (6,53))" id="182" type="TOKEN_INTEGER">100</Token>
+      <Token location="((6,53), (6,54))" id="41" type=")">)</Token>
+      <Token location="((6,54), (6,60))" id="943" type="LEX_WHITE">      </Token>
+      <Token location="((6,60), (6,63))" id="137" type="TOKEN_NOT">NOT</Token>
+      <Token location="((6,63), (6,64))" id="943" type="LEX_WHITE"> </Token>
+      <Token location="((6,64), (6,68))" id="267" type="TOKEN_NULL">NULL</Token>
+      <Token location="((6,68), (7,17))" id="943" type="LEX_WHITE">\r\n                </Token>
+      <Token location="((7,17), (7,18))" id="41" type=")">)</Token>
+      <Token location="((7,18), (7,19))" id="59" type=";">;</Token>
+    </Tokens>
+  </SqlBatch>
+</SqlScript>

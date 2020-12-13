@@ -15,7 +15,7 @@ let testDataTypeParser desc (dataType: DataType) (text: string) =
 
 [<Tests>]
 let tests =
-    testList "Parse" [
+    testList "FParsec SQL Parser" [
         //testParser segmentWithBrackets "[Total Price]"
         //testParser segmentNoBrackets "dbo."
         testParser "segment1" segment "[dbo]."
