@@ -8,13 +8,13 @@
   <ItemGroup>
     <Compile Include="Model.fs" />
     <Compile Include="Parser.fs" />
+    <Compile Include="MicrosoftParser.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
-  <ItemGroup />
-
   <ItemGroup>
     <PackageReference Include="FParsec" Version="1.1.1" />
+    <PackageReference Include="Microsoft.SqlServer.Management.SqlParser" Version="160.20216.14" />
   </ItemGroup>
 
 </Project>
