@@ -3,6 +3,7 @@
 open Expecto
 open System.IO
 open MicrosoftParser
+open System
 
 let readParseResultXml() =
     let file = FileInfo("SqlParseResult_TimeEntries.xml") // Expecto
@@ -48,6 +49,10 @@ let tests =
         testCase "Parse Script to XML" <| fun _ ->
             let result = Microsoft.SqlServer.Management.SqlParser.Parser.Parser.Parse(tableScript1)
             printfn "Parse Result: %s" result.Script.Xml
+
+        testCase "Dynamically Parse Table Script" <| fun _ ->
+            let xml = Reflection.parseSqlScript(tableScript1)
+            printfn "XML: %s" xml
             
         testCase "Read XML" <| fun _ ->
             let xml = readParseResultXml()
