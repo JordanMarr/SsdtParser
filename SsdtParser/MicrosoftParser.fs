@@ -15,6 +15,7 @@ and Column = {
     DataType: string
     AllowNulls: bool
     Identity: IdentitySpec option
+    HasDefault: bool
 }
 and IdentitySpec = {
     Seed: int
@@ -65,11 +66,17 @@ let parseMsResult (parseResult: Microsoft.SqlServer.Management.SqlParser.Parser.
                 cd.SelectSingleNode("SqlColumnIdentity") 
                 |> Option.ofObj 
                 |> Option.map (fun n -> { Increment = n |> att "Increment" |> int; Seed = n |> att "Seed" |> int })
+            let hasDefaultConstraint = 
+                cd.SelectSingleNode("SqlDefaultConstraint")
+                |> Option.ofObj
+                |> Option.map (fun c -> true)
+                |> Option.defaultValue false
 
             { Column.Name= colName
               Column.DataType = dataType
               Column.AllowNulls = allowNulls
-              Column.Identity = identity }
+              Column.Identity = identity
+              Column.HasDefault = hasDefaultConstraint }
         )
         |> Seq.toList
 
