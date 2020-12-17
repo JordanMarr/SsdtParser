@@ -44,11 +44,20 @@ let tests =
             REFERENCES [dbo].[Student] ([StudentID]) ON DELETE CASCADE
         )"
 
+    let computedColumnTableScript = 
+        "CREATE TABLE dbo.Products
+        (
+           ProductID int IDENTITY (1,1) NOT NULL
+           , QtyAvailable smallint
+           , UnitPrice money
+           , InventoryValue AS QtyAvailable * UnitPrice
+         );"
+
     testList "Microsoft SQL Parser" [
 
         testCase "Parse Script to XML" <| fun _ ->
-            let result = Microsoft.SqlServer.Management.SqlParser.Parser.Parser.Parse(tableScript1)
-            printfn "Parse Result: %s" result.Script.Xml
+            let result = Microsoft.SqlServer.Management.SqlParser.Parser.Parser.Parse tableScript1
+            printfn "XML: %s" result.Script.Xml
 
         testCase "Dynamically Parse Table Script" <| fun _ ->
             let xml = Reflection.parseSqlScript(tableScript1)
@@ -56,10 +65,14 @@ let tests =
             
         testCase "Read XML" <| fun _ ->
             let xml = readParseResultXml()
-            printfn "%s" xml
+            printfn "XML %s" xml
             ()
 
-        ftestCase "Parse schema from table script" <| fun _ ->
+        ftestCase "Computed Column XML" <| fun _ -> 
+            let result = Microsoft.SqlServer.Management.SqlParser.Parser.Parser.Parse(computedColumnTableScript)
+            printfn "XML: %s" result.Script.Xml
+
+        testCase "Parse schema from table script" <| fun _ ->
             Microsoft.SqlServer.Management.SqlParser.Parser.Parser.Parse tableScript1
             |> MicrosoftParser.parseMsResult
             |> printfn "%A"
