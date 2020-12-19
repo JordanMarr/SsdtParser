@@ -45,7 +45,7 @@ and SsdtViewColumn = {
     RefCol: SsdtColumn
 }
 
-/// Analyzes Microsoft SQL Parser XML results and returns a Table model.
+/// Analyzes Microsoft SQL Parser XML results and returns an SsdtTable model.
 let parseTableResult (parseResult: Microsoft.SqlServer.Management.SqlParser.Parser.ParseResult) = 
     let doc = new XmlDocument()
     use rdr = new StringReader(parseResult.Script.Xml)
@@ -139,7 +139,7 @@ let parseTableResult (parseResult: Microsoft.SqlServer.Management.SqlParser.Pars
       SsdtTable.PrimaryKey = primaryKeyConstraint
       SsdtTable.ForeignKeys = foreignKeyConstraints }
 
-/// Analyzes Microsoft SQL Parser XML results and returns a Table model.
+/// Analyzes Microsoft SQL Parser XML results and returns an SsdtView model.
 let parseViewResult (tablesByFullName: Map<string * string, SsdtTable>) (parseResult: Microsoft.SqlServer.Management.SqlParser.Parser.ParseResult) = 
     let doc = new XmlDocument()
     use rdr = new StringReader(parseResult.Script.Xml)
