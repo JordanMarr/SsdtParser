@@ -3,14 +3,14 @@
 open System.IO
 open System.Xml
 
-type Table = {
+type SsdtTable = {
     Schema: string
     Name: string
-    Columns: Column list
-    PrimaryKeys: PrimaryKeyConstraint list
+    Columns: SsdtColumn list
+    PrimaryKey: PrimaryKeyConstraint option
     ForeignKeys: ForeignKeyConstraint list
 }
-and Column = {
+and SsdtColumn = {
     Name: string
     DataType: string
     AllowNulls: bool
@@ -35,9 +35,18 @@ and PrimaryKeyConstraint = {
     Name: string
     Columns: string list
 }
+and SsdtView = {
+    Schema: string
+    Name: string
+    Columns: SsdtViewColumn list
+}
+and SsdtViewColumn = {
+    Name: string
+    RefCol: SsdtColumn
+}
 
 /// Analyzes Microsoft SQL Parser XML results and returns a Table model.
-let parseMsResult (parseResult: Microsoft.SqlServer.Management.SqlParser.Parser.ParseResult) = 
+let parseTableResult (parseResult: Microsoft.SqlServer.Management.SqlParser.Parser.ParseResult) = 
     let doc = new XmlDocument()
     use rdr = new StringReader(parseResult.Script.Xml)
     doc.Load(rdr)
@@ -68,18 +77,18 @@ let parseMsResult (parseResult: Microsoft.SqlServer.Management.SqlParser.Parser.
                 |> Option.map (fun n -> { Increment = n |> att "Increment" |> int; Seed = n |> att "Seed" |> int })
             let hasDefaultConstraint = cd.SelectSingleNode("SqlDefaultConstraint") <> null
 
-            { Column.Name= colName
-              Column.DataType = dataType
-              Column.AllowNulls = allowNulls
-              Column.Identity = identity
-              Column.HasDefault = hasDefaultConstraint }
+            { SsdtColumn.Name= colName
+              SsdtColumn.DataType = dataType
+              SsdtColumn.AllowNulls = allowNulls
+              SsdtColumn.Identity = identity
+              SsdtColumn.HasDefault = hasDefaultConstraint }
         )
         |> Seq.toList
 
-    let primaryKeyConstraints = 
-        tblStatement.SelectSingleNode("SqlTableDefinition").SelectNodes("SqlPrimaryKeyConstraint")
-        |> Seq.cast<XmlNode>
-        |> Seq.map (fun pkc -> 
+    let primaryKeyConstraint = 
+        tblStatement.SelectSingleNode("SqlTableDefinition").SelectSingleNode("SqlPrimaryKeyConstraint")
+        |> Option.ofObj
+        |> Option.map (fun pkc -> 
             let name = pkc |> att "Name"
             let cols = 
                 pkc.SelectNodes("SqlIndexedColumn")
@@ -89,7 +98,6 @@ let parseMsResult (parseResult: Microsoft.SqlServer.Management.SqlParser.Parser.
             { PrimaryKeyConstraint.Name = name
               PrimaryKeyConstraint.Columns = cols }
         )
-        |> Seq.toList
 
     let foreignKeyConstraints = 
         tblStatement.SelectSingleNode("SqlTableDefinition").SelectNodes("SqlForeignKeyConstraint")
@@ -125,8 +133,83 @@ let parseMsResult (parseResult: Microsoft.SqlServer.Management.SqlParser.Parser.
         )
         |> Seq.toList
     
-    { Table.Schema = tblSchemaName 
-      Table.Name = tblObjectName
-      Table.Columns = cols
-      Table.PrimaryKeys = primaryKeyConstraints
-      Table.ForeignKeys = foreignKeyConstraints }
+    { SsdtTable.Schema = tblSchemaName 
+      SsdtTable.Name = tblObjectName
+      SsdtTable.Columns = cols
+      SsdtTable.PrimaryKey = primaryKeyConstraint
+      SsdtTable.ForeignKeys = foreignKeyConstraints }
+
+/// Analyzes Microsoft SQL Parser XML results and returns a Table model.
+let parseViewResult (tablesByFullName: Map<string * string, SsdtTable>) (parseResult: Microsoft.SqlServer.Management.SqlParser.Parser.ParseResult) = 
+    let doc = new XmlDocument()
+    use rdr = new StringReader(parseResult.Script.Xml)
+    doc.Load(rdr)
+
+    let attMaybe (nm: string) (node: XmlNode) = 
+        node.Attributes 
+        |> Seq.cast<XmlAttribute> 
+        |> Seq.tryFind (fun a -> a.Name = nm) 
+        |> Option.map (fun a -> a.Value) 
+
+    let att (nm: string) (node: XmlNode) = 
+        attMaybe nm node |> Option.defaultValue ""
+
+    let viewDef = doc.SelectSingleNode("/SqlScript/SqlBatch/SqlCreateViewStatement/SqlViewDefinition")
+    let viewSchemaName, viewObjectName = 
+        let objId = viewDef.SelectSingleNode("SqlObjectIdentifier")
+        objId |> att "SchemaName", objId |> att "ObjectName"
+
+    // Represents all the types of view columns that we have implemented for parsing
+    let (|SqlScalarRefExpression|SqlNullScalarExpression|Other|) (parentNode: XmlNode) =
+        let ssre = parentNode.SelectSingleNode("SqlScalarRefExpression")
+        if ssre <> null then SqlScalarRefExpression ssre
+        else
+            let snse = parentNode.SelectSingleNode("SqlNullScalarExpression")
+            if snse <> null then SqlNullScalarExpression snse
+            else Other
+
+    let cols = 
+        viewDef.SelectSingleNode("SqlQuerySpecification").SelectSingleNode("SqlSelectClause").SelectNodes("SqlSelectScalarExpression")
+        |> Seq.cast<XmlNode>
+        |> Seq.choose (fun ssce ->
+            match ssce with
+            | SqlScalarRefExpression exp -> 
+                let objId = exp.SelectSingleNode("SqlObjectIdentifier")
+                let schema = objId |> att "DatabaseName" // Not sure why these are the way they are...
+                let table = objId |> att "SchemaName"
+                let tableColumn = objId |> att "ObjectName"
+                let colName = ssce |> attMaybe "Alias" |> Option.defaultValue tableColumn
+
+                // Try to find related table/column, else ignore
+                tablesByFullName.TryFind(schema, table)
+                |> Option.bind (fun table -> table.Columns |> List.tryFind (fun c -> c.Name = tableColumn))
+                |> Option.map (fun refCol ->
+                    { SsdtViewColumn.Name = colName
+                      SsdtViewColumn.RefCol = refCol }
+                )
+            | SqlNullScalarExpression exp -> 
+                let sqlId = ssce.SelectSingleNode("SqlIdentifier")
+                let colName = sqlId |> att "Value"
+                Some
+                    { SsdtViewColumn.Name = colName
+                      SsdtViewColumn.RefCol = 
+                        { SsdtColumn.Name= colName
+                          SsdtColumn.DataType = "SQL_VARIANT" // TODO: Could possibly manually parse XML comment to determine ref table.column
+                          SsdtColumn.AllowNulls = false
+                          SsdtColumn.Identity = None
+                          SsdtColumn.HasDefault = false } }
+            | Other -> 
+                None // Some view column type that is not yet handled...
+        )
+        |> Seq.toList
+            
+    { SsdtView.Schema = viewSchemaName 
+      SsdtView.Name = viewObjectName
+      SsdtView.Columns = cols }
+
+let viewToTable (view: SsdtView) = 
+    { SsdtTable.Schema = view.Schema
+      SsdtTable.Name = view.Name
+      SsdtTable.Columns = view.Columns |> List.map (fun c -> c.RefCol)
+      SsdtTable.PrimaryKey = None
+      SsdtTable.ForeignKeys = [] }

@@ -2,8 +2,8 @@
 
 open Expecto
 open System.IO
-open MicrosoftParser
 open System
+open Microsoft.SqlServer.Management.SqlParser.Parser
 
 let readParseResultXml() =
     let file = FileInfo("SqlParseResult_TimeEntries.xml") // Expecto
@@ -12,7 +12,7 @@ let readParseResultXml() =
 
 [<Tests>]
 let tests =
-    let tableScript1 = 
+    let timeEntriesScript = 
         "CREATE TABLE [dbo].[TimeEntries] (
         [Id]        UNIQUEIDENTIFIER   NOT NULL,
         [ProjectId] UNIQUEIDENTIFIER   NOT NULL,
@@ -53,14 +53,26 @@ let tests =
            , InventoryValue AS QtyAvailable * UnitPrice
          );"
 
+    let view1 = 
+        "CREATE VIEW dbo.v_AllTasksLog
+        AS
+        SELECT        dbo.Projects.Name AS ProjectName, dbo.Projects.ProjectNumber, dbo.Projects.ProjectType, dbo.Projects.LOD, dbo.Projects.Division, dbo.Projects.IsActive, dbo.ProjectTaskCategories.Name AS Category, 
+                                 dbo.ProjectTasks.Name AS TaskName, dbo.ProjectTasks.CostCode, dbo.ProjectTasks.Sort, dbo.TimeEntries.Username, dbo.TimeEntries.Email, dbo.TimeEntries.Date, COALESCE (dbo.TimeEntries.Hours, 0) AS Hours, 
+                                 dbo.TimeEntries.Created, dbo.TimeEntries.Updated, dbo.Users.EmployeeId
+        FROM            dbo.Projects INNER JOIN
+                                 dbo.ProjectTasks ON dbo.Projects.Id = dbo.ProjectTasks.ProjectId INNER JOIN
+                                 dbo.ProjectTaskCategories ON dbo.ProjectTasks.ProjectTaskCategoryId = dbo.ProjectTaskCategories.Id LEFT OUTER JOIN
+                                 dbo.TimeEntries ON dbo.Projects.Id = dbo.TimeEntries.ProjectId AND dbo.ProjectTasks.Id = dbo.TimeEntries.TaskId LEFT OUTER JOIN
+                                 dbo.Users ON dbo.Users.Email = dbo.TimeEntries.Email"
+
     testList "Microsoft SQL Parser" [
 
         testCase "Parse Script to XML" <| fun _ ->
-            let result = Microsoft.SqlServer.Management.SqlParser.Parser.Parser.Parse tableScript1
+            let result = Parser.Parse view1
             printfn "XML: %s" result.Script.Xml
 
         testCase "Dynamically Parse Table Script" <| fun _ ->
-            let xml = Reflection.parseSqlScript(tableScript1)
+            let xml = Reflection.parseSqlScript(timeEntriesScript)
             printfn "XML: %s" xml
             
         testCase "Read XML" <| fun _ ->
@@ -68,18 +80,24 @@ let tests =
             printfn "XML %s" xml
             ()
 
-        ftestCase "Computed Column XML" <| fun _ -> 
-            let result = Microsoft.SqlServer.Management.SqlParser.Parser.Parser.Parse(computedColumnTableScript)
+        testCase "Computed Column XML" <| fun _ -> 
+            let result = Parser.Parse(computedColumnTableScript)
             printfn "XML: %s" result.Script.Xml
 
         testCase "Parse schema from table script" <| fun _ ->
-            Microsoft.SqlServer.Management.SqlParser.Parser.Parser.Parse tableScript1
-            |> MicrosoftParser.parseMsResult
+            Parser.Parse timeEntriesScript
+            |> MicrosoftParser.parseTableResult
             |> printfn "%A"
 
         testCase "Parse Enrollment Table Script" <| fun _ ->
-            Microsoft.SqlServer.Management.SqlParser.Parser.Parser.Parse enrollmentTableScript
-            |> MicrosoftParser.parseMsResult
+            Parser.Parse enrollmentTableScript
+            |> MicrosoftParser.parseTableResult
             |> printfn "%A"
 
+        ftestCase "Parse View" <| fun _ ->
+            let tbl = Parser.Parse timeEntriesScript |> MicrosoftParser.parseTableResult
+            let tables = [(tbl.Schema,tbl.Name), tbl] |> Map.ofList
+            Parser.Parse view1
+            |> MicrosoftParser.parseViewResult tables
+            |> printfn "%A"
     ]
