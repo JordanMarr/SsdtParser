@@ -44,6 +44,26 @@ and SsdtViewColumn = {
     Name: string
     RefCol: SsdtColumn
 }
+and SsdtStoredProc = {
+    Schema: string
+    Name: string
+    Input: SsdtStoredProcParam list
+    Output: SsdtStoredProcParam list
+}
+and SsdtStoredProcParam = { 
+    Name: string
+    DataType: string
+    Direction: System.Data.ParameterDirection
+}
+
+let attMaybe (nm: string) (node: XmlNode) = 
+    node.Attributes 
+    |> Seq.cast<XmlAttribute> 
+    |> Seq.tryFind (fun a -> a.Name = nm) 
+    |> Option.map (fun a -> a.Value) 
+
+let att (nm: string)  = 
+    attMaybe nm >> Option.defaultValue ""
 
 /// Analyzes Microsoft SQL Parser XML results and returns an SsdtTable model.
 let parseTableResult (parseResult: Microsoft.SqlServer.Management.SqlParser.Parser.ParseResult) = 
@@ -51,13 +71,6 @@ let parseTableResult (parseResult: Microsoft.SqlServer.Management.SqlParser.Pars
     use rdr = new StringReader(parseResult.Script.Xml)
     doc.Load(rdr)
     
-    let att (nm: string) (node: XmlNode) = 
-        node.Attributes 
-        |> Seq.cast<XmlAttribute> 
-        |> Seq.tryFind (fun a -> a.Name = nm) 
-        |> Option.map (fun a -> a.Value) 
-        |> Option.defaultValue ""
-
     let tblStatement = doc.SelectSingleNode("/SqlScript/SqlBatch/SqlCreateTableStatement")
     let tblSchemaName, tblObjectName = 
         let objId = tblStatement.SelectSingleNode("SqlObjectIdentifier")
@@ -145,15 +158,6 @@ let parseViewResult (tablesByFullName: Map<string * string, SsdtTable>) (parseRe
     use rdr = new StringReader(parseResult.Script.Xml)
     doc.Load(rdr)
 
-    let attMaybe (nm: string) (node: XmlNode) = 
-        node.Attributes 
-        |> Seq.cast<XmlAttribute> 
-        |> Seq.tryFind (fun a -> a.Name = nm) 
-        |> Option.map (fun a -> a.Value) 
-
-    let att (nm: string) (node: XmlNode) = 
-        attMaybe nm node |> Option.defaultValue ""
-
     let viewDef = doc.SelectSingleNode("/SqlScript/SqlBatch/SqlCreateViewStatement/SqlViewDefinition")
     let viewSchemaName, viewObjectName = 
         let objId = viewDef.SelectSingleNode("SqlObjectIdentifier")
@@ -167,7 +171,7 @@ let parseViewResult (tablesByFullName: Map<string * string, SsdtTable>) (parseRe
             let snse = parentNode.SelectSingleNode("SqlNullScalarExpression")
             if snse <> null then SqlNullScalarExpression snse
             else Other
-
+    
     let cols = 
         viewDef.SelectSingleNode("SqlQuerySpecification").SelectSingleNode("SqlSelectClause").SelectNodes("SqlSelectScalarExpression")
         |> Seq.cast<XmlNode>
@@ -213,3 +217,32 @@ let viewToTable (view: SsdtView) =
       SsdtTable.Columns = view.Columns |> List.map (fun c -> c.RefCol)
       SsdtTable.PrimaryKey = None
       SsdtTable.ForeignKeys = [] }
+
+let parseStoredProc (parseResult: Microsoft.SqlServer.Management.SqlParser.Parser.ParseResult) =
+    let doc = new XmlDocument()
+    use rdr = new StringReader(parseResult.Script.Xml)
+    doc.Load(rdr)
+
+    let spDef = doc.SelectSingleNode("/SqlScript/SqlBatch/SqlCreateProcedureStatement/SqlProcedureDefinitionForCreate")
+    let objId = spDef.SelectSingleNode("SqlObjectIdentifier")
+    let spSchema = objId |> att "SchemaName"
+    let spName = spDef |> att "ObjectName"
+
+    let inputParams = 
+        spDef.SelectNodes("SqlParameterDeclaration")
+        |> Seq.cast<XmlNode>
+        |> Seq.map (fun p -> 
+            { SsdtStoredProcParam.Name = p |> att "Name"
+              SsdtStoredProcParam.DataType = p.SelectSingleNode("SqlDataTypeSpecification/SqlDataType") |> att "ObjectIdentifier"
+              SsdtStoredProcParam.Direction = 
+                match p |> attMaybe "IsOutput" with
+                | Some "True" -> System.Data.ParameterDirection.InputOutput
+                | _ -> System.Data.ParameterDirection.Input
+            }
+        )
+
+    { SsdtStoredProc.Schema = spSchema
+      SsdtStoredProc.Name = spName
+      SsdtStoredProc.Input = inputParams |> Seq.toList
+      SsdtStoredProc.Output =[]
+    }
